@@ -1,0 +1,25 @@
+* {
+
+  box-sizing: border-box;
+}
+
+body {
+
+  width: 300px;
+  height: 300px;
+  margin: 0;
+}
+
+h1 {
+
+  text-align: center;
+}
+
+.screenshot {
+
+  text-align: center;
+  width: 50%;
+  height: 150px;
+  padding-top: 35px;
+  border-right: 1px solid #333;
+}

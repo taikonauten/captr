@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "captr",
+    "description": "The name of the application"
+  },
+  "appDescription": {
+    "message": "send screenshots to redmine",
+    "description": "The description of the application"
+  }
+}
