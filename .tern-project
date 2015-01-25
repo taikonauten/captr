@@ -1,0 +1,10 @@
+{
+  "libs": [
+    "browser"
+  ],
+  "plugins": {
+    "doc_comment": {
+      "fullDocs": true
+    }
+  }
+}
