@@ -67,6 +67,7 @@ chrome.runtime.onMessage.addListener(
     {},
     function(dataUrl){
       sendResponse({imgSrc:dataUrl});
+      
     }
   );
   return true;
