@@ -12,9 +12,11 @@
     <body ng-app="captr" ng-csp>
         <h1>CAPTR SETTINGS</h1>
         <form class="captr-options-form" ng-controller="OptionsCtrl">
-          Redmine URL: <input type="text" ng-model="redmine.url" ng-change="saveOptions()" /><br />
-          API Key: <input type="text" ng-model="redmine.apikey" ng-change="saveOptions()" /><br />
-          <span ng-bind="redmine.access"></span>
+          Redmine URL: <input type="text" ng-model="options.url" ng-change="saveOptions()" /><br />
+          API Key: <input type="text" ng-model="options.apikey" ng-change="saveOptions()" /><br />
+          <input type="button" value="Check Connection" ng-click="testConnection()" /><br />
+          <span ng-bind="options.access"></span>
+          <pre ng-bind="options.error"></pre>
         </form>
 
         <!-- build:js scripts/vendor.js -->

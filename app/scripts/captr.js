@@ -9,6 +9,7 @@ app.directive('screenshot', function() {
 
       element.bind("click", function(e){
 
+        //get data from current tab
         chrome.tabs.getSelected(null, function(tab){
 
           localStorage.setItem("url",tab.url);
@@ -22,8 +23,10 @@ app.directive('screenshot', function() {
           format: "png"
         }, function (data) {
 
+          //save screenshot
           localStorage.setItem("screenshot", data);
 
+          //go to editor page
           chrome.tabs.create({
             url: "captr.html"
           });
@@ -36,21 +39,40 @@ app.directive('screenshot', function() {
 
 });
 
-app.controller('OptionsCtrl', ['$scope','Redmine', function($scope, Redmine) {
+app.controller('OptionsCtrl', ['$scope','Redmine', 'Config', function($scope, Redmine, Config) {
 
-  $scope.redmine = {
+  $scope.options = {
     "url" : ((localStorage.getItem("options-redmine")) ? localStorage.getItem("options-redmine") : "URL"),
     "apikey" : ((localStorage.getItem("options-apikey")) ? localStorage.getItem("options-apikey") : "X-Redmine-API-Key")
   };
 
+  console.log(Config.getUrl());
+
   $scope.saveOptions = function() {
+
     try {
-      localStorage.setItem("options-redmine",$scope.redmine.url);
-      localStorage.setItem("options-apikey",$scope.redmine.apikey);
+      localStorage.setItem("options-redmine", $scope.options.url);
+      localStorage.setItem("options-apikey", $scope.options.apikey);
 
     } catch (e) {
+
       console.log(e);
     }
+  };
+
+  $scope.testConnection = function() {
+
+    Redmine.projects()
+    .success(function(data,status) {
+
+      $scope.options.access = "ALL GOOD!";
+      $scope.options.error = "Status: "+ status;
+    })
+    .error(function(data,status,headers,config) {
+
+      $scope.options.access = "ERROR - Please update your information";
+      $scope.options.error = "Status: "+ status;
+    });
   };
 
 }]);
@@ -62,6 +84,8 @@ app.controller('EditorCtrl', ['$scope','Redmine', function($scope,Redmine) {
       "width" : localStorage.getItem('width'),
       "height" : localStorage.getItem('height'),
       "status" : localStorage.getItem('status'),
+      "useragent" : navigator.userAgent,
+      "os" : navigator.platform,
       "description" : "",
       "subject" : ""
   };
@@ -71,6 +95,7 @@ app.controller('EditorCtrl', ['$scope','Redmine', function($scope,Redmine) {
   var canvas = document.getElementById("c");
   var canvas2 = document.getElementById("d");
   var canvas3 = document.getElementById("r");
+
   var ctx = canvas.getContext("2d");
   var ctx2 = canvas2.getContext("2d");
   var ctx3 = canvas3.getContext("2d");
@@ -89,9 +114,11 @@ app.controller('EditorCtrl', ['$scope','Redmine', function($scope,Redmine) {
 
     ctx3.canvas.width = image.width;
     ctx3.canvas.height = image.height;
-    //draw image
+
+    //draw image on visible canvas
     ctx.drawImage(image, 0, 0);
-    //draw image
+
+    //draw image on hidden canvas
     ctx3.drawImage(image, 0, 0);
   };
 
@@ -229,45 +256,90 @@ app.directive("editedScreen", function(){
 
 /*
 
+  Config Factory
+
+*/
+
+app.factory('Config', function () {
+
+  return {
+
+    getUrl: function() {
+
+      return localStorage.getItem("options-redmine");
+    },
+
+    getApikey: function() {
+
+      return localStorage.getItem("options-apikey");
+    },
+
+    getProjectsUrl: function() {
+
+      return localStorage.getItem("options-redmine") + '/projects.json';
+    },
+
+    getTrackersUrl: function() {
+
+      return localStorage.getItem("options-redmine") + '/trackers.json';
+    },
+
+    getUploadsUrl: function() {
+
+      return localStorage.getItem("options-redmine") + '/uploads.json';
+    },
+
+    getIssuesUrl: function() {
+
+      return localStorage.getItem("options-redmine") + '/issues.json';
+    },
+
+    getFileHeader: function() {
+
+      var fileHeader = {
+        'Content-Type': 'application/octet-stream',
+        'X-Redmine-API-Key': localStorage.getItem("options-apikey")
+      };
+
+      return fileHeader;
+    },
+
+    getJsonHeader: function() {
+
+      var jsonHeader = {
+        'Content-Type': 'application/json',
+        'X-Redmine-API-Key': localStorage.getItem("options-apikey")
+      };
+
+      return jsonHeader;
+    }
+
+  }
+
+});
+
+/*
+
   API Factory
 
 */
-app.factory('Redmine', function ($http) {
-
-  var urlbase     = localStorage.getItem("options-redmine"),
-      apikey      = localStorage.getItem("options-apikey"),
-      projectsUrl = urlbase + '/projects.json',
-      trackersUrl = urlbase + '/trackers.json',
-      uploadUrl   = urlbase + '/uploads.json',
-      issuesUrl   = urlbase + '/issues.json';
-
-  //headers
-  var file = {
-    'Content-Type': 'application/octet-stream',
-    'X-Redmine-API-Key': apikey
-  };
-
-  var json = {
-    'Content-Type': 'application/json',
-    'X-Redmine-API-Key': apikey
-  };
+app.factory('Redmine', ['$http','Config', function($http, Config) {
 
   return {
 
     projects: function () {
 
-      return $http.get(projectsUrl, {headers:json,params:{limit:100}});
+      return $http.get(Config.getProjectsUrl(), {headers:Config.getJsonHeader(), params:{limit:100}});
     },
 
     trackers: function () {
 
-      return $http.get(trackersUrl, {headers:json,params:{limit:100}});
+      return $http.get(Config.getTrackersUrl(), {headers:Config.getJsonHeader(), params:{limit:100}});
     },
-
 
     upload: function (image) {
 
-      return $http({method:'POST', url:uploadUrl, headers:file, data:image});
+      return $http({method:'POST', url:Config.getUploadsUrl(), headers:Config.getFileHeader(), data:image});
     },
 
     create: function (pid,tid,issue) {
@@ -279,10 +351,12 @@ app.factory('Redmine', function ($http) {
           "subject": issue.subject,
           "description": issue.description,
           "custom_fields":[
-            {"value": issue.status,"id":4},
-            {"value": issue.url,"id":5},
-            {"value": issue.width,"id":2},
-            {"value": issue.height,"id":3}
+            {"value": issue.status,"id":6},
+            {"value": issue.url,"id":7},
+            {"value": issue.width,"id":4},
+            {"value": issue.height,"id":5},
+            {"value": issue.useragent,"id":8},
+            {"value": issue.os,"id":9}
           ],
           "uploads": [
             {"token": issue.screenshot, "filename": "screenshot.png", "content_type": "image/png"}
@@ -290,11 +364,10 @@ app.factory('Redmine', function ($http) {
         }
       };
 
-      return $http({method:'POST', url:issuesUrl, headers:json, data:issue});
+      return $http({method:'POST', url:Config.getIssuesUrl(), headers:Config.getJsonHeader(), data:issue});
 
     }
 
-
   }
 
-});
+}]);
