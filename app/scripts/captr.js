@@ -11,7 +11,7 @@ app.directive('screenshot', function() {
 
         //get data from current tab
         chrome.tabs.getSelected(null, function(tab){
-
+          
           localStorage.setItem("url",tab.url);
           localStorage.setItem("width",tab.width);
           localStorage.setItem("height",tab.height);
@@ -45,8 +45,6 @@ app.controller('OptionsCtrl', ['$scope','Redmine', 'Config', function($scope, Re
     "url" : ((localStorage.getItem("options-redmine")) ? localStorage.getItem("options-redmine") : "URL"),
     "apikey" : ((localStorage.getItem("options-apikey")) ? localStorage.getItem("options-apikey") : "X-Redmine-API-Key")
   };
-
-  console.log(Config.getUrl());
 
   $scope.saveOptions = function() {
 
@@ -122,6 +120,7 @@ app.controller('EditorCtrl', ['$scope','Redmine', function($scope,Redmine) {
     ctx3.drawImage(image, 0, 0);
   };
 
+  //retrieve all projects
   Redmine.projects().
   success(function(data, status, headers, config) {
 
@@ -133,6 +132,7 @@ app.controller('EditorCtrl', ['$scope','Redmine', function($scope,Redmine) {
     console.log('error',data);
   });
 
+  //retrieve all trackers
   Redmine.trackers().
   success(function(data, status, headers, config) {
 
@@ -144,6 +144,7 @@ app.controller('EditorCtrl', ['$scope','Redmine', function($scope,Redmine) {
     console.log('error',data);
   });
 
+  //prepare ticket
   $scope.submit = function() {
     if ($scope.project.id) {
 
@@ -235,7 +236,7 @@ app.directive("draw", function(){
 
         // draw it
         ctx.strokeStyle = "#ff4040";
-        ctx.lineWidth   = 5;
+        ctx.lineWidth   = 3;
         ctx.strokeRect(rect.startX,rect.startY, rect.wid, rect.hgt);
       }
     }
