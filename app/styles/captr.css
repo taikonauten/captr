@@ -1,4 +1,17 @@
-img {
+canvas {
 
   width: 80%;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: optimize-contrast;
+}
+
+#d, #r {
+
+  position: absolute;
+  left: 0;
+}
+
+#r {
+
+  z-index: -1;
 }
