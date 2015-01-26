@@ -9,18 +9,22 @@
         <link href="styles/main.css" rel="stylesheet">
         <!-- endbuild -->
     </head>
-    <body>
-        <h1>'Allo, 'Allo!</h1>
-                
+    <body ng-app="captr" ng-csp>
+        <h1>CAPTR SETTINGS</h1>
+        <form class="captr-options-form" ng-controller="OptionsCtrl">
+          Redmine URL: <input type="text" ng-model="redmine.url" ng-change="saveOptions()" /><br />
+          API Key: <input type="text" ng-model="redmine.apikey" ng-change="saveOptions()" /><br />
+          <span ng-bind="redmine.access"></span>
+        </form>
+
         <!-- build:js scripts/vendor.js -->
         <!-- bower:js -->
-        <script src="bower_components/zepto/zepto.js"></script>
         <script src="bower_components/angular/angular.js"></script>
         <!-- endbower -->
         <!-- endbuild -->
 
-        <!-- build:js scripts/options.js -->
-        <script src="scripts/options.js"></script>
+        <!-- build:js scripts/captr.js -->
+        <script src="scripts/captr.js"></script>
         <!-- endbuild -->
     </body>
 </html>
