@@ -14,7 +14,6 @@
 <body ng-app="captr" ng-csp>
   <h1>Editor</h1>
   <div ng-controller="EditorCtrl" editor>
-    <topbar></topbar>
     <form ng-submit="submit()" class="css-form">
       Project: <select ng-model="project" ng-options="project.name for project in projects"></select>
       Tracker: <select ng-model="tracker" ng-options="tracker.name for tracker in trackers"></select>
