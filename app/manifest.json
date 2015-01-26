@@ -11,6 +11,7 @@
     "scripts": ["scripts/events.js"],
     "persistent": false
   },
+  "options_page": "options.html",
   "default_locale": "en",
   "content_scripts": [{
     "matches": ["http://*/*","https://*/*"],
@@ -25,10 +26,9 @@
     "default_title": "start captr",
     "default_popup": "popup.html"
   },
-  "content_security_policy": "script-src 'self'; object-src 'self'",
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "web_accessible_resources": [
     "bower_components/angular/*",
-    "templates/topbar.html",
     "scripts/captr.js",
     "styles/main.css"
   ],
