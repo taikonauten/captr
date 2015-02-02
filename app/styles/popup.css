@@ -5,6 +5,8 @@
 
 body {
 
+  font-family: 'Helvetica Neue',sans-serif;
+  font-weight: 300;
   width: 300px;
   height: 300px;
   margin: 0;
@@ -22,4 +24,32 @@ h1 {
   height: 150px;
   padding-top: 35px;
   border-right: 1px solid #333;
+}
+
+.ticket:hover #captrflyout,
+.screenshot:hover #captrscreen {
+
+  fill: #CFC1A7;
+  transition: fill .4s ease;
+}
+
+.title {
+
+  font-size: 16px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.animate-show {
+  opacity: 1;
+}
+
+.animate-show.ng-hide-add.ng-hide-add-active,
+.animate-show.ng-hide-remove.ng-hide-remove-active {
+  -webkit-transition: all linear 0.5s;
+  transition: all linear 0.5s;
+}
+
+.animate-show.ng-hide {
+  opacity: 0;
 }
