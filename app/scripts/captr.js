@@ -2,6 +2,42 @@
 
 var app = angular.module('captr', []);
 
+/*
+  CONTROLLER
+
+
+
+*/
+
+app.controller('PopupCtrl', ['$scope','Redmine', 'Config', function($scope, Redmine, Config) {
+
+  $scope.simpleTicket = false;
+
+}]);
+
+/*
+  DIRECTIVE
+
+  changes simpleTicket scope var to show form
+
+*/
+app.directive('ticket', function() {
+  return {
+    restrict: 'A',
+    scope: '=',
+    link: function(scope, element){
+
+      element.bind("click", function(e){
+
+        scope.simpleTicket = (scope.simpleTicket) ? false : true;
+        scope.$apply();
+
+      });
+    }
+  };
+
+});
+
 app.directive('screenshot', function() {
   return {
     restrict: 'A',
@@ -11,7 +47,7 @@ app.directive('screenshot', function() {
 
         //get data from current tab
         chrome.tabs.getSelected(null, function(tab){
-          
+
           localStorage.setItem("url",tab.url);
           localStorage.setItem("width",tab.width);
           localStorage.setItem("height",tab.height);
