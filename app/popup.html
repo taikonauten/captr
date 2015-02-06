@@ -18,6 +18,27 @@
 
         <div ng-controller="PopupCtrl">
 
+          <div class="animate-show" ng-show="loading">
+
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 14 32 18" width="180" height="8" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" style="stop-color:rgb(189,17,147);stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:rgb(34,158,255);stop-opacity:1" />
+                </linearGradient>
+              </defs>
+              <path fill="url(#grad1)" opacity="0.8" transform="translate(12.0768 0)" d="M2 14 V18 H6 V14z">
+                <animateTransform attributeName="transform" type="translate" values="0 0; 24 0; 0 0" dur="2s" begin="0" repeatCount="indefinite" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" calcMode="spline"/>
+              </path>
+              <path fill="url(#grad1)" opacity="0.5" transform="translate(15.511 0)" d="M0 14 V18 H8 V14z">
+                <animateTransform attributeName="transform" type="translate" values="0 0; 24 0; 0 0" dur="2s" begin="0.1s" repeatCount="indefinite" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" calcMode="spline"/>
+              </path>
+              <path fill="url(#grad1)" opacity="0.25" transform="translate(19.1592 0)" d="M0 14 V18 H8 V14z">
+                <animateTransform attributeName="transform" type="translate" values="0 0; 24 0; 0 0" dur="2s" begin="0.2s" repeatCount="indefinite" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" calcMode="spline"/>
+              </path>
+            </svg>
+
+          </div>
 
           <div class="animate-show" ng-hide="simpleTicket">
 
@@ -62,8 +83,8 @@
 
           </div>
 
-          <div class="animate-show" ng-hide="!simpleTicket" ng-include="'templates/ticket-form.html'"></div>
-
+          <div class="animate-show" ng-show="simpleTicket" ng-include="'templates/ticket-form.html'"></div>
+          <span ng-show="simpleTicket" ticket>BACK</span>
         </div>
 
         <!-- build:js scripts/vendor.js -->

@@ -1,4 +1,4 @@
-<form ng-submit="submit()" class="css-form">
+<form ng-controller="FormCtrl" ng-submit="submit()" class="css-form">
 
   Project: <select ng-model="project" ng-options="project.name for project in projects"></select>
   Tracker: <select ng-model="tracker" ng-options="tracker.name for tracker in trackers"></select>
@@ -13,4 +13,3 @@
   <input type="submit" id="submit" value="Submit" />
 
 </form>
-<span ticket>BACK</span>
