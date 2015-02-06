@@ -119,64 +119,6 @@ app.directive('screenshot', function() {
 
 });
 
-app.directive('editor', function() {
-
-  return {
-    restrict: 'A',
-    scope: '=',
-    link: function() {
-
-      var canvas = document.getElementById("c");
-      var canvas2 = document.getElementById("d");
-      var canvas3 = document.getElementById("r");
-
-      var ctx = canvas.getContext("2d");
-      var ctx2 = canvas2.getContext("2d");
-      var ctx3 = canvas3.getContext("2d");
-
-      var image = new Image();
-      image.src = localStorage.getItem("screenshot");;
-
-      image.onload = function() {
-
-        //set dimensions
-        ctx.canvas.width = image.width;
-        ctx.canvas.height = image.height;
-
-        ctx2.canvas.width = image.width;
-        ctx2.canvas.height = image.height;
-
-        ctx3.canvas.width = image.width;
-        ctx3.canvas.height = image.height;
-
-        //draw image on visible canvas
-        ctx.drawImage(image, 0, 0);
-
-        //draw image on hidden canvas
-        ctx3.drawImage(image, 0, 0);
-      };
-
-      var getImageBlob = function() {
-
-        ctx3.drawImage(can2,0,0)
-        var img = ctx3.canvas.toDataURL();
-
-        var binary = atob(img.split(',')[1]);
-        var arr = [];
-        for(var i = 0; i < binary.length; i++) {
-          arr.push(binary.charCodeAt(i));
-        }
-
-        scope.blob = new Blob([new Uint8Array(arr)], {type: 'image/png'});
-
-      };
-
-    }
-  };
-
-});
-
-
 app.controller('OptionsCtrl', ['$scope','Redmine', 'Config', function($scope, Redmine, Config) {
 
   $scope.options = {
@@ -257,9 +199,17 @@ app.controller('FormCtrl', ['$rootScope','$scope','Redmine', function($rootScope
     if ($scope.project.id) {
 
       //if we're in the editor, upload the screenshot first
-      //if($rootScope.isEditor){
+      if($rootScope.isEditor) {
 
-        Redmine.upload(fileBlob)
+        //TODO: needs some sort of promise!
+        var scope = angular.element(document.getElementById('editor')).scope();
+          scope.$apply(function(){
+
+          scope.getImageBlob();
+        });
+
+
+        Redmine.upload($rootScope.blob)
         .success(function(data, status, headers, config) {
 
           console.log('success',data);
@@ -272,7 +222,20 @@ app.controller('FormCtrl', ['$rootScope','$scope','Redmine', function($rootScope
           console.log('error',data);
         });
 
-      //}
+      }
+
+      Redmine.create($scope.project.id, $scope.tracker.id, $scope.issue)
+      .success(function(data, status, headers, config) {
+
+        console.log('success',data);
+        //write screenshot id to scope
+        alert('success!');
+
+      }).
+      error(function(data, status, headers, config) {
+
+        console.log('error',data);
+      });
 
     }
   };
@@ -293,11 +256,9 @@ app.controller('EditorCtrl', ['$rootScope','$scope','Redmine', function($rootSco
 
   var canvas = document.getElementById("c");
   var canvas2 = document.getElementById("d");
-  var canvas3 = document.getElementById("r");
 
   var ctx = canvas.getContext("2d");
   var ctx2 = canvas2.getContext("2d");
-  var ctx3 = canvas3.getContext("2d");
 
   var image = new Image();
   image.src = path;
@@ -311,14 +272,23 @@ app.controller('EditorCtrl', ['$rootScope','$scope','Redmine', function($rootSco
     ctx2.canvas.width = image.width;
     ctx2.canvas.height = image.height;
 
-    ctx3.canvas.width = image.width;
-    ctx3.canvas.height = image.height;
-
     //draw image on visible canvas
     ctx.drawImage(image, 0, 0);
+  };
 
-    //draw image on hidden canvas
-    ctx3.drawImage(image, 0, 0);
+  $scope.getImageBlob = function() {
+
+    ctx.drawImage(canvas2,0,0)
+    var img = ctx.canvas.toDataURL();
+
+    var binary = atob(img.split(',')[1]);
+    var arr = [];
+    for(var i = 0; i < binary.length; i++) {
+      arr.push(binary.charCodeAt(i));
+    }
+
+    $rootScope.blob = new Blob([new Uint8Array(arr)], {type: 'image/png'});
+
   };
 
 }]);
@@ -327,16 +297,18 @@ app.directive("draw", function(){
   return {
     restrict: "A",
     link: function(scope, element){
+
       var ctx = element[0].getContext('2d');
+
+      var factor,dragoffx,dragoffy;
 
       // variable that decides if something should be drawn on mousemove
       var drawing = false;
+      var dragging = false;
 
       var r = document.body.clientWidth * 0.8;
-      var factor,dragoffx,dragoffy;
-      var move = false;
 
-      //coordinates
+      //rect object
       var rect = {};
 
       element.bind('mousedown', function(event){
@@ -364,7 +336,9 @@ app.directive("draw", function(){
         rect.startY = event.offsetY * factor;
 
         drawing = true;
+
       }).bind('mousemove', function(event){
+
         if(drawing){
 
           //save coords
@@ -379,7 +353,7 @@ app.directive("draw", function(){
           draw();
         }
 
-        if(move) {
+        if(dragging) {
 
           rect.startX = (event.offsetX * factor) - dragoffx;
           rect.startY = (event.offsetY * factor) - dragoffy;
@@ -394,11 +368,14 @@ app.directive("draw", function(){
 
       }).bind('mouseup', function(event){
 
+        //single draw outside option
+        drawOutside();
+
         // stop drawing
         drawing = false;
 
         // stop moving
-        move = false;
+        dragging = false;
       });
 
       function clear() {
@@ -413,7 +390,7 @@ app.directive("draw", function(){
         ctx.lineWidth   = 3;
         ctx.strokeRect(rect.startX, rect.startY, rect.wid, rect.hgt);
 
-        drawOutside();
+        //drawOutside();
       }
 
       //TODO: we need to check direction, only LR is working ATM!
@@ -423,16 +400,29 @@ app.directive("draw", function(){
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
         // draw dark outside
-
         ctx.fillStyle = 'rgba(0,0,0,0.2)';
+
+        //check if we have negative values and adjust them
+        if(rect.hgt < 0) {
+          rect.hgt = rect.hgt * (-1);
+          //rect.startY = rect.startY - rect.hgt;
+          rect.savedStartY = rect.startY - rect.hgt;
+        }
+
+        if(rect.wid < 0) {
+          rect.wid = rect.wid * (-1);
+          //rect.startX = rect.startX - rect.wid;
+          rect.savedStartX = rect.startX - rect.wid;
+        }
+
         //top
-        ctx.fillRect(0, 0, ctx.canvas.width, rect.startY);
+        ctx.fillRect(0, 0, ctx.canvas.width, rect.savedStartY);
         //left
-        ctx.fillRect(0, rect.startY, rect.startX, ctx.canvas.height + rect.hgt);
+        ctx.fillRect(0, rect.savedStartY, rect.savedStartX, ctx.canvas.height + rect.hgt);
         //right
-        ctx.fillRect((rect.startX + rect.wid), rect.startY, (ctx.canvas.width - rect.startY) + rect.wid, ctx.canvas.height + rect.hgt);
+        ctx.fillRect((rect.savedStartX + rect.wid), rect.savedStartY, (ctx.canvas.width - rect.savedStartX) + rect.wid, ctx.canvas.height + rect.hgt);
         //bottom
-        ctx.fillRect(rect.startX, (rect.startY + rect.hgt), rect.wid, (ctx.canvas.height - (rect.startY + rect.hgt)));
+        ctx.fillRect(rect.savedStartX, (rect.savedStartY + rect.hgt), rect.wid, (ctx.canvas.height - (rect.savedStartY + rect.hgt)));
       }
     }
   };

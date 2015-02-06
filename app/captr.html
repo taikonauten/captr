@@ -13,12 +13,11 @@
 </head>
 <body ng-app="captr" ng-csp>
   <h1>Editor</h1>
-  <editor>
+  <div id="editor" ng-controller="EditorCtrl">
     <!-- TODO: USE SINGLE CANVAS!!  -->
     <canvas id="c" editor></canvas>
     <canvas id="d" draw></canvas>
-    <canvas id="r"></canvas>
-  </editor>
+  </div>
 
   <div ng-include="'templates/ticket-form.html'"></div>
 
