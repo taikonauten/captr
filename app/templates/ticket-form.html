@@ -1,7 +1,9 @@
 <form ng-controller="FormCtrl" ng-submit="submit()" class="css-form">
 
-  Project: <select ng-model="project" ng-options="project.name for project in projects"></select>
-  Tracker: <select ng-model="tracker" ng-options="tracker.name for tracker in trackers"></select>
+  Project: <select ng-model="project" ng-options="project.name for project in projects" ng-change="updateProjectMembers(project.id)" required></select>
+  Tracker: <select ng-model="tracker" ng-options="tracker.name for tracker in trackers" required></select>
+  Kategorie: <select ng-model="category" ng-options="category.name for category in issue_categories"></select>
+  Zugewiesen an: <select ng-model="selectedMember" ng-options="member.user.id as member.user.name group by member.roles[0].name for member in memberships" /></select>
   Titel: <input type="text" ng-model="issue.subject" required/><br />
   Beschreibung: <textarea ng-model="issue.description"></textarea><br />
   Breite: <span ng-bind="issue.width"></span><br />

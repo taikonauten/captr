@@ -3,6 +3,7 @@
     "browser"
   ],
   "plugins": {
+    "angular":"./",
     "doc_comment": {
       "fullDocs": true
     }

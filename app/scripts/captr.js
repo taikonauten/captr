@@ -1,13 +1,21 @@
 'use strict';
 
-var app = angular.module('captr', []);
+var app = angular.module('captr', ['ngResource']);
 
+//TODO: share as global vars!
 // app.run(function($rootScope) {
 //
 //   //indicates i
 //   $scope.simpleTicket = false;
 //   $scope.loading = false;
-// })
+// });
+
+/*
+
+  CONSTANTS
+
+*/
+app.constant("RELATIVE_WIDTH","0.8");
 
 /*
   CONTROLLER
@@ -29,7 +37,7 @@ app.controller('PopupCtrl', ['$scope','Redmine', 'Config', function($scope, Redm
   changes simpleTicket scope var to show form
 
 */
-app.directive('ticket', function() {
+app.directive('ticket', ['Chrome', function(Chrome) {
   return {
     restrict: 'A',
     scope: '=',
@@ -37,31 +45,20 @@ app.directive('ticket', function() {
 
       element.bind("click", function(e){
 
-        console.log('sT before',scope.simpleTicket);
-
-        //fetch data from current tab
-        chrome.tabs.getSelected(null, function(tab){
-
-          localStorage.setItem("url",tab.url);
-          localStorage.setItem("width",tab.width);
-          localStorage.setItem("height",tab.height);
-          localStorage.setItem("status",tab.status);
-
-        });
-
+        console.log(scope.simpleTicket);
+        Chrome.saveBrowserData();
 
         scope.simpleTicket = (scope.simpleTicket) ? false : true;
         scope.$apply();
 
-        console.log('sT after',scope.simpleTicket);
-
       });
     }
   };
 
-});
+}]);
 
-app.directive('back', function() {
+app.directive('screenshot', ['Chrome', function(Chrome) {
+
   return {
     restrict: 'A',
     scope: '=',
@@ -69,59 +66,18 @@ app.directive('back', function() {
 
       element.bind("click", function(e){
 
-        console.log('sT before',scope.simpleTicket);
-
-        scope.simpleTicket = false;
-        scope.$apply();
-
-        console.log('sT after',scope.simpleTicket);
+        Chrome.captureScreen();
 
       });
     }
   };
 
-});
-
-app.directive('screenshot', function() {
-  return {
-    restrict: 'A',
-    link: function(scope, element){
-
-      element.bind("click", function(e){
-
-        //get data from current tab
-        chrome.tabs.getSelected(null, function(tab){
-
-          localStorage.setItem("url",tab.url);
-          localStorage.setItem("width",tab.width);
-          localStorage.setItem("height",tab.height);
-          localStorage.setItem("status",tab.status);
-
-        });
-
-        chrome.tabs.captureVisibleTab(null, {
-          format: "png"
-        }, function (data) {
-
-          //save screenshot
-          localStorage.setItem("screenshot", data);
-
-          //go to editor page
-          chrome.tabs.create({
-            url: "captr.html"
-          });
-
-        });
-
-      });
-    }
-  };
-
-});
+}]);
 
 app.controller('OptionsCtrl', ['$scope','Redmine', 'Config', function($scope, Redmine, Config) {
 
   $scope.options = {
+
     "url" : ((localStorage.getItem("options-redmine")) ? localStorage.getItem("options-redmine") : "URL"),
     "apikey" : ((localStorage.getItem("options-apikey")) ? localStorage.getItem("options-apikey") : "X-Redmine-API-Key")
   };
@@ -129,6 +85,7 @@ app.controller('OptionsCtrl', ['$scope','Redmine', 'Config', function($scope, Re
   $scope.saveOptions = function() {
 
     try {
+
       localStorage.setItem("options-redmine", $scope.options.url);
       localStorage.setItem("options-apikey", $scope.options.apikey);
 
@@ -141,23 +98,24 @@ app.controller('OptionsCtrl', ['$scope','Redmine', 'Config', function($scope, Re
   $scope.testConnection = function() {
 
     Redmine.projects()
-    .success(function(data,status) {
+    .success(function(data/*,status*/) {
 
       $scope.options.access = "ALL GOOD!";
-      $scope.options.error = "Status: "+ status;
+      //$scope.options.error = "Status: "+ status;
     })
     .error(function(data,status,headers,config) {
 
       $scope.options.access = "ERROR - Please update your information";
-      $scope.options.error = "Status: "+ status;
+      //$scope.options.error = "Status: "+ status;
     });
   };
 
 }]);
 
-app.controller('FormCtrl', ['$rootScope','$scope','Redmine', function($rootScope,$scope,Redmine) {
+app.controller('FormCtrl', ['$rootScope','$scope','Redmine','Canvas', function($rootScope,$scope,Redmine,Canvas) {
 
   $scope.issue = {
+
       "url" : localStorage.getItem('url'),
       "width" : localStorage.getItem('width'),
       "height" : localStorage.getItem('height'),
@@ -174,6 +132,7 @@ app.controller('FormCtrl', ['$rootScope','$scope','Redmine', function($rootScope
 
     console.log('success',data);
     $scope.projects = data.projects;
+
   }).
   error(function(data, status, headers, config) {
 
@@ -192,6 +151,35 @@ app.controller('FormCtrl', ['$rootScope','$scope','Redmine', function($rootScope
     console.log('error',data);
   });
 
+  //update user list
+  $scope.updateProjectMembers = function(projectId) {
+
+    //retrieve members
+    Redmine.memberships(projectId).
+    success(function(data, status, headers, config) {
+
+      console.log('success',data);
+      $scope.memberships = data.memberships;
+    }).
+    error(function(data, status, headers, config) {
+
+      console.log('error',data);
+    });
+
+    //retrieve all categories
+    Redmine.categories(projectId).
+    success(function(data, status, headers, config) {
+
+      console.log('success',data);
+      $scope.issue_categories = data.issue_categories;
+    }).
+    error(function(data, status, headers, config) {
+
+      console.log('error',data);
+    });
+
+  };
+
   //prepare ticket
   $scope.submit = function() {
 
@@ -201,112 +189,130 @@ app.controller('FormCtrl', ['$rootScope','$scope','Redmine', function($rootScope
       //if we're in the editor, upload the screenshot first
       if($rootScope.isEditor) {
 
-        //TODO: needs some sort of promise!
-        var scope = angular.element(document.getElementById('editor')).scope();
-          scope.$apply(function(){
-
-          scope.getImageBlob();
-        });
-
-
-        Redmine.upload($rootScope.blob)
+        Redmine.upload(Canvas.getFileBlob())
         .success(function(data, status, headers, config) {
 
           console.log('success',data);
           //write screenshot id to scope
           $scope.issue.screenshot = data.upload.token;
 
+          createTicket($scope.project.id, $scope.tracker.id, $scope.selectedMember, $scope.category.id, $scope.issue);
+
         }).
         error(function(data, status, headers, config) {
 
           console.log('error',data);
+
         });
+
+      } else {
+
+        createTicket($scope.project.id, $scope.tracker.id, $scope.selectedMember, $scope.category.id, $scope.issue);
 
       }
 
-      Redmine.create($scope.project.id, $scope.tracker.id, $scope.issue)
-      .success(function(data, status, headers, config) {
-
-        console.log('success',data);
-        //write screenshot id to scope
-        alert('success!');
-
-      }).
-      error(function(data, status, headers, config) {
-
-        console.log('error',data);
-      });
-
     }
   };
+
+  function createTicket(projectId, trackerId, userId, category, issue) {
+
+    Redmine.create(projectId, trackerId, userId, category, $scope.issue)
+    .success(function(data, status, headers, config) {
+
+      console.log('success',data);
+      //write screenshot id to scope
+      alert('success!');
+
+    }).
+    error(function(data, status, headers, config) {
+
+      console.log('error',data);
+    });
+  }
 
 }]);
 
 /*
 
-TODO: rewrite as directive
+  CONTROLLER
 
+  editor logic
 
 */
-app.controller('EditorCtrl', ['$rootScope','$scope','Redmine', function($rootScope,$scope,Redmine) {
+app.controller('EditorCtrl', ['$rootScope','$scope','Redmine','Canvas', function($rootScope,$scope,Redmine,Canvas) {
 
   $rootScope.isEditor = true;
 
-  var path = localStorage.getItem("screenshot");
-
-  var canvas = document.getElementById("c");
-  var canvas2 = document.getElementById("d");
-
-  var ctx = canvas.getContext("2d");
-  var ctx2 = canvas2.getContext("2d");
-
-  var image = new Image();
-  image.src = path;
-
-  image.onload = function() {
-
-    //set dimensions
-    ctx.canvas.width = image.width;
-    ctx.canvas.height = image.height;
-
-    ctx2.canvas.width = image.width;
-    ctx2.canvas.height = image.height;
-
-    //draw image on visible canvas
-    ctx.drawImage(image, 0, 0);
-  };
-
-  $scope.getImageBlob = function() {
-
-    ctx.drawImage(canvas2,0,0)
-    var img = ctx.canvas.toDataURL();
-
-    var binary = atob(img.split(',')[1]);
-    var arr = [];
-    for(var i = 0; i < binary.length; i++) {
-      arr.push(binary.charCodeAt(i));
-    }
-
-    $rootScope.blob = new Blob([new Uint8Array(arr)], {type: 'image/png'});
-
-  };
+  Canvas.init();
 
 }]);
 
-app.directive("draw", function(){
+app.factory("Canvas",function(){
+
+  var path, canvas, canvas2, ctx, ctx2, image;
+
+  return {
+
+    init: function() {
+
+      path = localStorage.getItem("screenshot");
+
+      canvas = document.getElementById("c");
+      canvas2 = document.getElementById("d");
+
+      ctx = canvas.getContext("2d");
+      ctx2 = canvas2.getContext("2d");
+
+      image = new Image();
+      image.src = path;
+
+      image.onload = function() {
+
+        //set dimensions
+        ctx.canvas.width = image.width;
+        ctx.canvas.height = image.height;
+
+        ctx2.canvas.width = image.width;
+        ctx2.canvas.height = image.height;
+
+        //draw image on visible canvas
+        ctx.drawImage(image, 0, 0);
+      };
+
+    },
+
+    getFileBlob: function() {
+
+      ctx.drawImage(canvas2,0,0)
+      var img = ctx.canvas.toDataURL();
+
+      var binary = atob(img.split(',')[1]);
+      var arr = [];
+      for(var i = 0; i < binary.length; i++) {
+        arr.push(binary.charCodeAt(i));
+      }
+
+      return new Blob([new Uint8Array(arr)], {type: 'image/png'});
+    }
+
+  }
+
+});
+
+app.directive("draw", ['RELATIVE_WIDTH', function(relativeWidth){
   return {
     restrict: "A",
     link: function(scope, element){
 
       var ctx = element[0].getContext('2d');
 
-      var factor,dragoffx,dragoffy;
+      var factor, dragoffx, dragoffy, offsetX, offsetY;
 
-      // variable that decides if something should be drawn on mousemove
+      // var for maintining some sort of state
       var drawing = false;
       var dragging = false;
 
-      var r = document.body.clientWidth * 0.8;
+      var r = document.body.clientWidth * relativeWidth;
 
       //rect object
       var rect = {};
@@ -316,15 +322,19 @@ app.directive("draw", function(){
         //do it everytime, fixes resize issues
         factor = ctx.canvas.width / r;
 
+        //offsets
+        offsetX = event.offsetX * factor;
+        offsetY = event.offsetY * factor;
+
         //when its set - check if you're inside
         if(rect.startX && rect.startY) {
 
-          if(((event.offsetX * factor) < (rect.savedStartX + rect.wid) && (event.offsetX * factor) > rect.savedStartX) && ((event.offsetY * factor) < (rect.savedStartY + rect.hgt) && (event.offsetY * factor) > rect.savedStartY)) {
+          if(offsetX < (rect.savedStartX + rect.width) && offsetX > rect.savedStartX && offsetY < (rect.savedStartY + rect.height) && offsetY > rect.savedStartY) {
 
-            move = true;
+            dragging = true;
 
-            dragoffx = (event.offsetX * factor) - rect.savedStartX;
-            dragoffy = (event.offsetY * factor) - rect.savedStartY;
+            dragoffx = offsetX - rect.savedStartX;
+            dragoffy = offsetY - rect.savedStartY;
 
             return;
 
@@ -332,12 +342,16 @@ app.directive("draw", function(){
 
         }
 
-        rect.startX = event.offsetX * factor;
-        rect.startY = event.offsetY * factor;
+        rect.startX = offsetX;
+        rect.startY = offsetY;
 
         drawing = true;
 
       }).bind('mousemove', function(event){
+
+        //offsets
+        offsetX = event.offsetX * factor;
+        offsetY = event.offsetY * factor;
 
         if(drawing){
 
@@ -346,8 +360,8 @@ app.directive("draw", function(){
           rect.savedStartY = rect.startY;
 
           // get current mouse position
-          rect.wid = (event.offsetX * factor) - rect.startX;
-          rect.hgt = (event.offsetY * factor) - rect.startY;
+          rect.width = offsetX - rect.startX;
+          rect.height = offsetY - rect.startY;
 
           clear();
           draw();
@@ -355,8 +369,8 @@ app.directive("draw", function(){
 
         if(dragging) {
 
-          rect.startX = (event.offsetX * factor) - dragoffx;
-          rect.startY = (event.offsetY * factor) - dragoffy;
+          rect.startX = offsetX - dragoffx;
+          rect.startY = offsetY - dragoffy;
 
           //save coords
           rect.savedStartX = rect.startX;
@@ -365,6 +379,8 @@ app.directive("draw", function(){
           clear();
           draw();
         }
+
+        return;
 
       }).bind('mouseup', function(event){
 
@@ -388,12 +404,11 @@ app.directive("draw", function(){
         // draw it
         ctx.strokeStyle = "#F4BA41";
         ctx.lineWidth   = 3;
-        ctx.strokeRect(rect.startX, rect.startY, rect.wid, rect.hgt);
+        ctx.strokeRect(rect.startX, rect.startY, rect.width, rect.height);
 
         //drawOutside();
       }
 
-      //TODO: we need to check direction, only LR is working ATM!
       function drawOutside() {
 
         //clear first
@@ -403,30 +418,30 @@ app.directive("draw", function(){
         ctx.fillStyle = 'rgba(0,0,0,0.2)';
 
         //check if we have negative values and adjust them
-        if(rect.hgt < 0) {
-          rect.hgt = rect.hgt * (-1);
-          //rect.startY = rect.startY - rect.hgt;
-          rect.savedStartY = rect.startY - rect.hgt;
+        if(rect.height < 0) {
+          rect.height = rect.height * (-1);
+          //rect.startY = rect.startY - rect.height;
+          rect.savedStartY = rect.startY - rect.height;
         }
 
-        if(rect.wid < 0) {
-          rect.wid = rect.wid * (-1);
-          //rect.startX = rect.startX - rect.wid;
-          rect.savedStartX = rect.startX - rect.wid;
+        if(rect.width < 0) {
+          rect.width = rect.width * (-1);
+          //rect.startX = rect.startX - rect.width;
+          rect.savedStartX = rect.startX - rect.width;
         }
 
         //top
         ctx.fillRect(0, 0, ctx.canvas.width, rect.savedStartY);
         //left
-        ctx.fillRect(0, rect.savedStartY, rect.savedStartX, ctx.canvas.height + rect.hgt);
+        ctx.fillRect(0, rect.savedStartY, rect.savedStartX, ctx.canvas.height + rect.height);
         //right
-        ctx.fillRect((rect.savedStartX + rect.wid), rect.savedStartY, (ctx.canvas.width - rect.savedStartX) + rect.wid, ctx.canvas.height + rect.hgt);
+        ctx.fillRect((rect.savedStartX + rect.width), rect.savedStartY, (ctx.canvas.width - rect.savedStartX) + rect.width, ctx.canvas.height + rect.height);
         //bottom
-        ctx.fillRect(rect.savedStartX, (rect.savedStartY + rect.hgt), rect.wid, (ctx.canvas.height - (rect.savedStartY + rect.hgt)));
+        ctx.fillRect(rect.savedStartX, (rect.savedStartY + rect.height), rect.width, (ctx.canvas.height - (rect.savedStartY + rect.height)));
       }
     }
   };
-});
+}]);
 
 /*
 
@@ -434,7 +449,7 @@ app.directive("draw", function(){
 
 */
 
-app.factory('Config', function () {
+app.factory('Config', ['$resource', function ($resource) {
 
   return {
 
@@ -451,6 +466,24 @@ app.factory('Config', function () {
     getProjectsUrl: function() {
 
       return localStorage.getItem("options-redmine") + '/projects.json';
+    },
+
+    getMembershipsUrl: function(projectId) {
+
+      // var membersUrl = $resource(localStorage.getItem("options-redmine")+'/projects/:projectId/memberships.json',{},
+      //       post:{
+      //         method:"POST",
+      //         isArray:false,
+      //         headers:{'X-Redmine-API-Key':localStorage.getItem("options-apikey"),
+      //                  'Content-Type': 'application/json'}
+      //     });
+
+      return localStorage.getItem("options-redmine") + '/projects/' + projectId + '/memberships.json'
+    },
+
+    getCategoryUrl: function(projectId) {
+
+      return localStorage.getItem("options-redmine") + '/projects/' + projectId + '/issue_categories.json'
     },
 
     getTrackersUrl: function() {
@@ -490,7 +523,7 @@ app.factory('Config', function () {
 
   }
 
-});
+}]);
 
 /*
 
@@ -506,6 +539,16 @@ app.factory('Redmine', ['$http','Config', function($http, Config) {
       return $http.get(Config.getProjectsUrl(), {headers:Config.getJsonHeader(), params:{limit:100}});
     },
 
+    memberships: function (projectId) {
+
+      return $http.get(Config.getMembershipsUrl(projectId), {headers:Config.getJsonHeader()});
+    },
+
+    categories: function (projectId) {
+
+      return $http.get(Config.getCategoryUrl(projectId), {headers:Config.getJsonHeader()});
+    },
+
     trackers: function () {
 
       return $http.get(Config.getTrackersUrl(), {headers:Config.getJsonHeader(), params:{limit:100}});
@@ -516,7 +559,7 @@ app.factory('Redmine', ['$http','Config', function($http, Config) {
       return $http({method:'POST', url:Config.getUploadsUrl(), headers:Config.getFileHeader(), data:image});
     },
 
-    create: function (pid,tid,issue) {
+    create: function (pid,tid,uid,cid,issue) {
 
       var issue = {
         "issue": {
@@ -524,6 +567,8 @@ app.factory('Redmine', ['$http','Config', function($http, Config) {
           "tracker_id": tid,
           "subject": issue.subject,
           "description": issue.description,
+          "assigned_to_id": uid,
+          "category_id": cid,
           "custom_fields":[
             {"value": issue.status,"id":6},
             {"value": issue.url,"id":7},
@@ -545,3 +590,47 @@ app.factory('Redmine', ['$http','Config', function($http, Config) {
   }
 
 }]);
+
+/*
+
+  CHROME FACTORY
+
+*/
+app.factory('Chrome', function() {
+
+  return {
+
+    saveBrowserData: function() {
+
+      //fetch data from current tab
+      chrome.tabs.getSelected(null, function(tab){
+
+        localStorage.setItem("url",tab.url);
+        localStorage.setItem("width",tab.width);
+        localStorage.setItem("height",tab.height);
+        localStorage.setItem("status",tab.status);
+
+      });
+
+    },
+
+    captureScreen: function() {
+
+      chrome.tabs.captureVisibleTab(null, {
+        format: "png"
+      }, function (data) {
+
+        //save screenshot
+        localStorage.setItem("screenshot", data);
+
+        //go to editor page
+        chrome.tabs.create({
+          url: "captr.html"
+        });
+
+      });
+    }
+
+  };
+
+});
