@@ -6,8 +6,8 @@ var app = angular.module('captr', ['ngAnimate']);
 // app.run(function($rootScope) {
 //
 //   //indicates i
-//   $scope.simpleTicket = false;
-//   $scope.loading = false;
+//   $rootScope.simpleTicket = false;
+//   $rootScope.loading = false;
 // });
 
 /*
@@ -24,10 +24,10 @@ app.constant("RELATIVE_WIDTH","0.8");
 
 */
 
-app.controller('PopupCtrl', ['$scope','Redmine', 'Config', function($scope, Redmine, Config) {
+app.controller('PopupCtrl', ['$rootScope','Redmine', 'Config', function($rootScope, Redmine, Config) {
 
-  $scope.simpleTicket = false;
-  $scope.loading = false;
+  $rootScope.simpleTicket = false;
+  $rootScope.loading = false;
 
 }]);
 
@@ -182,6 +182,8 @@ app.controller('FormCtrl', ['$rootScope','$scope','Redmine','Canvas', function($
 
   //prepare ticket
   $scope.submit = function() {
+
+    $rootScope.loading = true;
 
     //check for id and title
     if ($scope.project.id) {

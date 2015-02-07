@@ -18,7 +18,7 @@
 
         <div ng-controller="PopupCtrl">
 
-          <div class="animate-show" ng-show="loading">
+          <div class="loader" ng-show="loading">
 
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 14 32 18" width="180" height="8" preserveAspectRatio="none">
               <defs>
@@ -40,9 +40,9 @@
 
           </div>
 
-          <div class="animate-show" ng-hide="simpleTicket">
+          <div class="animate-hide container" ng-hide="simpleTicket">
 
-            <div class="screenshot" screenshot>
+            <div class="box box-screenshot" screenshot>
 
               <span class="title">SCREENSHOT</span>
 
@@ -64,11 +64,11 @@
 
             </div>
 
-            <div class="ticket" ticket>
+            <div class="box box-ticket" ticket>
 
               <span class="title">TICKET</span>
 
-              <svg width="30px" height="42px" viewBox="0 0 30 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+              <svg width="32px" height="42px" viewBox="0 0 32 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
                   <g id="cptr---addon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
                       <g sketch:type="MSArtboardGroup" transform="translate(-1051.000000, -173.000000)" id="captrflyout" fill="#9DA5AD">
                           <g sketch:type="MSLayerGroup" transform="translate(928.000000, 114.000000)">
@@ -83,8 +83,10 @@
 
           </div>
 
-          <div class="animate-show" ng-show="simpleTicket" ng-include="'templates/ticket-form.html'"></div>
+          <div class="container-form animate-show" ng-show="simpleTicket" ng-include="'templates/ticket-form.html'"></div>
+
           <span ng-show="simpleTicket" ticket>BACK</span>
+
         </div>
 
         <!-- build:js scripts/vendor.js -->

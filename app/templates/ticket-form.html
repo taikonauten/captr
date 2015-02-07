@@ -1,17 +1,44 @@
-<form ng-controller="FormCtrl" ng-submit="submit()" class="css-form">
+<form ng-controller="FormCtrl" ng-submit="submit()" class="form form-ticket">
 
-  Project: <select ng-model="project" ng-options="project.name for project in projects" ng-change="updateProjectMembers(project.id)" required></select>
-  Tracker: <select ng-model="tracker" ng-options="tracker.name for tracker in trackers" required></select>
-  Kategorie: <select ng-model="category" ng-options="category.name for category in issue_categories"></select>
-  Zugewiesen an: <select ng-model="selectedMember" ng-options="member.user.id as member.user.name group by member.roles[0].name for member in memberships" /></select>
-  Titel: <input type="text" ng-model="issue.subject" required/><br />
-  Beschreibung: <textarea ng-model="issue.description"></textarea><br />
-  Breite: <span ng-bind="issue.width"></span><br />
-  Höhe: <span ng-bind="issue.height"></span><br />
-  URL: <span ng-bind="issue.url"></span><br />
-  Status: <span ng-bind="issue.status"></span><br />
-  User Agent: <span ng-bind="issue.useragent"></span><br />
-  Betriebssystem: <span ng-bind="issue.os"></span><br />
+  <fieldset>
+    <label>Projekt</label>
+    <select ng-model="project" ng-options="project.name for project in projects" ng-change="updateProjectMembers(project.id)" required></select>
+  </fieldset>
+
+  <fieldset>
+    <label>Tracker</label>
+    <select ng-model="tracker" ng-options="tracker.name for tracker in trackers" required></select>
+  </fieldset>
+
+  <fieldset>
+    <label>Kategorie</label>
+    <select ng-model="category" ng-options="category.name for category in issue_categories" ng-disabled="!issue_categories.length"></select>
+  </fieldset>
+
+  <fieldset>
+    <label>Zugewiesen an</label>
+    <select ng-model="selectedMember" ng-options="member.user.id as member.user.name group by member.roles[0].name for member in memberships"  ng-disabled="!memberships.length" /></select>
+  </fieldset>
+
+  <fieldset>
+    <label>Titel</label>
+    <input type="text" ng-model="issue.subject" required/><br />
+  </fieldset>
+
+  <fieldset>
+    <label>Beschreibung</label>
+    <textarea ng-model="issue.description"></textarea><br />
+  </fieldset>
+
+  <fieldset>
+    Breite: <span ng-bind="issue.width"></span><br />
+    Höhe: <span ng-bind="issue.height"></span><br />
+    URL: <span ng-bind="issue.url"></span><br />
+    Status: <span ng-bind="issue.status"></span><br />
+    User Agent: <span ng-bind="issue.useragent"></span><br />
+    Betriebssystem: <span ng-bind="issue.os"></span><br />
+  </fieldset>
+
   <input type="submit" id="submit" value="Submit" />
 
 </form>

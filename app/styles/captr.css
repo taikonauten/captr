@@ -1,3 +1,73 @@
+@font-face {
+  font-family: 'Montserrat';
+  src: url('Montserrat-Black.eot');
+  src: url('Montserrat-Black.eot?#iefix') format('embedded-opentype'),
+       url('Montserrat-Black.woff') format('woff'),
+       url('Montserrat-Black.ttf')  format('truetype'),
+       url('Montserrat-Black.svg#32d2de489ae4ccadea255227c4d7ddfd') format('svg');
+
+  font-style:   normal;
+  font-weight:  800;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('./font/Montserrat-Bold.eot');
+  src: url('./font/Montserrat-Bold.eot?#iefix') format('embedded-opentype'),
+       url('./font/Montserrat-Bold.woff') format('woff'),
+       url('./font/Montserrat-Bold.ttf')  format('truetype'),
+       url('./font/Montserrat-Bold.svg#2eb9a020d90588d099da01ff1a93c338') format('svg');
+
+  font-style:   normal;
+  font-weight:  700;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('./font/Montserrat-Hairline.eot');
+  src: url('./font/Montserrat-Hairline.eot?#iefix') format('embedded-opentype'),
+       url('./font/Montserrat-Hairline.woff') format('woff'),
+       url('./font/Montserrat-Hairline.ttf')  format('truetype'),
+       url('./font/Montserrat-Hairline.svg#1ec624975f362ffc7a87d22144317904') format('svg');
+
+  font-style:   normal;
+  font-weight:  100;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('./font/Montserrat-Light.eot');
+  src: url('./font/Montserrat-Light.eot?#iefix') format('embedded-opentype'),
+       url('./font/Montserrat-Light.woff') format('woff'),
+       url('./font/Montserrat-Light.ttf')  format('truetype'),
+       url('./font/Montserrat-Light.svg#c152625b71562a7bb7b752375273b2d5') format('svg');
+
+  font-style:   normal;
+  font-weight:  300;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('./font/Montserrat-Regular.eot');
+  src: url('./font/Montserrat-Regular.eot?#iefix') format('embedded-opentype'),
+       url('./font/Montserrat-Regular.woff') format('woff'),
+       url('./font/Montserrat-Regular.ttf')  format('truetype'),
+       url('./font/Montserrat-Regular.svg#95d90f2cd2aa64bdfee0e9f34c516e71') format('svg');
+
+  font-style:   normal;
+  font-weight:  400;
+}
+
+* {
+
+  box-sizing: border-box;
+}
+
+body {
+
+  font-family: 'Montserrat','Helvetica',sans-serif;
+}
+
 canvas {
 
   width: 80%;
