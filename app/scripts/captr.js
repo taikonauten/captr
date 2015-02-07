@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('captr', ['ngResource']);
+var app = angular.module('captr', ['ngAnimate']);
 
 //TODO: share as global vars!
 // app.run(function($rootScope) {
