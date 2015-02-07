@@ -40,16 +40,25 @@ h1 {
   margin-bottom: 10px;
 }
 
-.animate-show {
-  opacity: 1;
-}
-
 .animate-show.ng-hide-add.ng-hide-add-active,
 .animate-show.ng-hide-remove.ng-hide-remove-active {
-  -webkit-transition: all linear 0.5s;
-  transition: all linear 0.5s;
+
+  position: absolute;
+  -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2s;
+  -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2s;
+  -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2s;
+  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2s;
 }
 
 .animate-show.ng-hide {
+
   opacity: 0;
+  left: -100%;
+}
+
+.animate-show {
+
+  position: relative;
+  opacity:1;
+  left: 0;
 }

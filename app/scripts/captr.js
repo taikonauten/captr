@@ -449,7 +449,7 @@ app.directive("draw", ['RELATIVE_WIDTH', function(relativeWidth){
 
 */
 
-app.factory('Config', ['$resource', function ($resource) {
+app.factory('Config', function () {
 
   return {
 
@@ -523,7 +523,7 @@ app.factory('Config', ['$resource', function ($resource) {
 
   }
 
-}]);
+});
 
 /*
 
