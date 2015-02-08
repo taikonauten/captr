@@ -3,7 +3,8 @@
   "version": "0.0.3",
   "dependencies": {
     "angular": "< 2",
-    "angular-animate": "*"
+    "angular-animate": "*",
+    "compass-mixins" : "Igosuki/compass-mixins"
   },
   "devDependencies": {}
 }
