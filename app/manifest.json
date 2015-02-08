@@ -1,40 +1,52 @@
 {
-  "name": "captr",
-  "version": "0.0.3",
-  "manifest_version": 3,
-  "description": "send screenshots to redmine",
-  "icons": {
-    "16": "images/icon-16.png",
-    "128": "images/icon-128.png"
-  },
-  "background": {
-    "scripts": ["scripts/events.js"],
-    "persistent": false
-  },
-  "options_page": "options.html",
-  "default_locale": "en",
-  "content_scripts": [{
-    "matches": ["http://*/*","https://*/*"],
-    "js": ["bower_components/angular/angular.min.js","scripts/captr.js"],
-    "css": ["styles/main.css"]
-  }],
-  "browser_action": {
-    "default_icon": {
-      "19": "images/icon-19.png",
-      "38": "images/icon-38.png"
+    "name": "captr",
+    "version": "0.0.4",
+    "manifest_version": 3,
+    "description": "send screenshots to redmine",
+    "icons": {
+        "16": "images/icon-16.png",
+        "128": "images/icon-128.png"
     },
-    "default_title": "start captr",
-    "default_popup": "popup.html"
-  },
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
-  "web_accessible_resources": [
-    "bower_components/angular/*",
-    "scripts/captr.js",
-    "styles/main.css"
-  ],
-  "permissions": [
-    "tabs",
-    "activeTab",
-    "<all_urls>"
-  ]
+    "background": {
+        "scripts": [
+            "scripts/events.js"
+        ],
+        "persistent": false
+    },
+    "options_page": "options.html",
+    "default_locale": "en",
+    "content_scripts": [
+        {
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "js": [
+                "bower_components/angular/angular.min.js",
+                "scripts/captr.js"
+            ],
+            "css": [
+                "styles/main.css"
+            ]
+        }
+    ],
+    "browser_action": {
+        "default_icon": {
+            "19": "images/icon-19.png",
+            "38": "images/icon-38.png"
+        },
+        "default_title": "start captr",
+        "default_popup": "popup.html"
+    },
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+    "web_accessible_resources": [
+        "bower_components/angular/*",
+        "scripts/captr.js",
+        "styles/main.css"
+    ],
+    "permissions": [
+        "tabs",
+        "activeTab",
+        "<all_urls>"
+    ]
 }
