@@ -1,0 +1,146 @@
+@font-face {
+  font-family: 'Montserrat';
+  src: url('Montserrat-Black.eot');
+  src: url('Montserrat-Black.eot?#iefix') format('embedded-opentype'),
+       url('Montserrat-Black.woff') format('woff'),
+       url('Montserrat-Black.ttf')  format('truetype'),
+       url('Montserrat-Black.svg#32d2de489ae4ccadea255227c4d7ddfd') format('svg');
+
+  font-style:   normal;
+  font-weight:  800;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('./font/Montserrat-Bold.eot');
+  src: url('./font/Montserrat-Bold.eot?#iefix') format('embedded-opentype'),
+       url('./font/Montserrat-Bold.woff') format('woff'),
+       url('./font/Montserrat-Bold.ttf')  format('truetype'),
+       url('./font/Montserrat-Bold.svg#2eb9a020d90588d099da01ff1a93c338') format('svg');
+
+  font-style:   normal;
+  font-weight:  700;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('./font/Montserrat-Hairline.eot');
+  src: url('./font/Montserrat-Hairline.eot?#iefix') format('embedded-opentype'),
+       url('./font/Montserrat-Hairline.woff') format('woff'),
+       url('./font/Montserrat-Hairline.ttf')  format('truetype'),
+       url('./font/Montserrat-Hairline.svg#1ec624975f362ffc7a87d22144317904') format('svg');
+
+  font-style:   normal;
+  font-weight:  100;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('./font/Montserrat-Light.eot');
+  src: url('./font/Montserrat-Light.eot?#iefix') format('embedded-opentype'),
+       url('./font/Montserrat-Light.woff') format('woff'),
+       url('./font/Montserrat-Light.ttf')  format('truetype'),
+       url('./font/Montserrat-Light.svg#c152625b71562a7bb7b752375273b2d5') format('svg');
+
+  font-style:   normal;
+  font-weight:  300;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('./font/Montserrat-Regular.eot');
+  src: url('./font/Montserrat-Regular.eot?#iefix') format('embedded-opentype'),
+       url('./font/Montserrat-Regular.woff') format('woff'),
+       url('./font/Montserrat-Regular.ttf')  format('truetype'),
+       url('./font/Montserrat-Regular.svg#95d90f2cd2aa64bdfee0e9f34c516e71') format('svg');
+
+  font-style:   normal;
+  font-weight:  400;
+}
+
+* {
+
+  box-sizing: border-box;
+}
+
+body {
+
+  font-family: 'Montserrat','Helvetica',sans-serif;
+  font-weight: 400;
+  width: 300px;
+  height: 200px;
+  margin: 0;
+}
+
+h1 {
+
+  text-align: center;
+}
+
+.container {
+
+  display: flex;
+  flex-direction: row;
+  flex-flow: center;
+  padding-top: 35px;
+}
+
+.box {
+
+  text-align: center;
+  width: 50%;
+  height: 150px;
+}
+
+.box-ticket:hover #captrflyout,
+.box-screenshot:hover #captrscreen {
+
+  fill: #CFC1A7;
+  transition: fill .4s ease;
+}
+
+.title {
+
+  font-size: 16px;
+  display: inline-block;
+  margin-bottom: 10px;
+  width: 100%;
+  font-weight: 200;
+}
+
+.form-ticket {
+
+  width: 300px;
+}
+
+/* animations */
+.animate-show.ng-hide-add.ng-hide-add-active,
+.animate-show.ng-hide-remove.ng-hide-remove-active,
+.animate-hide.ng-hide-add.ng-hide-add-active,
+.animate-hide.ng-hide-remove.ng-hide-remove-active {
+
+  -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.6s;
+  -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.6s;
+  -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.6s;
+  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.6s;
+}
+
+.animate-show.ng-hide {
+
+  opacity: 0;
+  margin-left: -50%;
+}
+
+.animate-hide.ng-hide {
+
+  opacity: 0;
+  margin-left: 50%;
+}
+
+.animate-show,
+.animate-hide {
+
+  position: relative;
+  opacity: 1;
+  margin-left: 0;
+}
