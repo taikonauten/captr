@@ -139,6 +139,19 @@ app.controller('FormCtrl', ['$rootScope','$scope','Redmine','Canvas', function($
     console.log('error',data);
   });
 
+  //retrieve all projects
+  Redmine.trackers().
+  success(function(data, status, headers, config) {
+
+    console.log('success',data);
+    $scope.trackers = data.trackers;
+
+  }).
+  error(function(data, status, headers, config) {
+
+    console.log('error',data);
+  });
+
   //update user list
   $scope.updateProjectMembers = function(projectId) {
 
@@ -175,7 +188,7 @@ app.controller('FormCtrl', ['$rootScope','$scope','Redmine','Canvas', function($
 
     //check for id and title
     if ($scope.project.id) {
-
+      console.log($scope.project.id);
       //if we're in the editor, upload the screenshot first
       if($rootScope.isEditor) {
 
@@ -186,7 +199,7 @@ app.controller('FormCtrl', ['$rootScope','$scope','Redmine','Canvas', function($
           //write screenshot id to scope
           $scope.issue.screenshot = data.upload.token;
 
-          createTicket($scope.project.id, $scope.tracker.id, $scope.selectedMember, $scope.category.id, $scope.issue);
+          createTicket($scope.project.id, $scope.trackers.id, $scope.selectedMember, /*$scope.category.id,*/ $scope.issue);
 
         }).
         error(function(data, status, headers, config) {
@@ -197,7 +210,7 @@ app.controller('FormCtrl', ['$rootScope','$scope','Redmine','Canvas', function($
 
       } else {
 
-        createTicket($scope.project.id, $scope.tracker.id, $scope.selectedMember, $scope.category.id, $scope.issue);
+        createTicket($scope.project.id, $scope.trackers.id, $scope.selectedMember, /*$scope.category.id,*/ $scope.issue);
 
       }
 
@@ -539,9 +552,9 @@ app.factory('Redmine', ['$http','Config', function($http, Config) {
       return $http.get(Config.getCategoryUrl(projectId), {headers:Config.getJsonHeader()});
     },
 
-    trackers: function (projectId) {
+    trackers: function () {
 
-      return $http.get(Config.getTrackersUrl(projectId), {headers:Config.getJsonHeader(), params:{limit:100}});
+      return $http.get(Config.getTrackersUrl(), {headers:Config.getJsonHeader(), params:{limit:100}});
     },
 
     upload: function (image) {
