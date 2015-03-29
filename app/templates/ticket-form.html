@@ -30,13 +30,13 @@
     <label>Beschreibung</label>
   </fieldset>
 
-  <fieldset>
-    Breite: <span ng-bind="issue.width"></span><br />
-    Höhe: <span ng-bind="issue.height"></span><br />
-    URL: <span ng-bind="issue.url"></span><br />
-    Status: <span ng-bind="issue.status"></span><br />
-    User Agent: <span ng-bind="issue.useragent"></span><br />
-    Betriebssystem: <span ng-bind="issue.os"></span><br />
+  <fieldset class="form-additional">
+    <span class="form-additional-line">Breite: <span ng-bind="issue.width"></span></span>
+    <span class="form-additional-line">Höhe: <span ng-bind="issue.height"></span></span>
+    <span class="form-additional-line">URL: <span ng-bind="issue.url"></span></span>
+    <span class="form-additional-line">Status: <span ng-bind="issue.status"></span></span>
+    <span class="form-additional-line">User Agent: <span ng-bind="issue.useragent"></span></span>
+    <span class="form-additional-line">Betriebssystem: <span ng-bind="issue.os"></span></span>
   </fieldset>
 
   <input type="submit" id="submit" value="Submit" />

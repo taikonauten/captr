@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'Montserrat';
-  src: url('Montserrat-Black.eot');
-  src: url('Montserrat-Black.eot?#iefix') format('embedded-opentype'),
-       url('Montserrat-Black.woff') format('woff'),
-       url('Montserrat-Black.ttf')  format('truetype'),
-       url('Montserrat-Black.svg#32d2de489ae4ccadea255227c4d7ddfd') format('svg');
+  src: url('./fonts/Montserrat-Black.eot');
+  src: url('./fonts/Montserrat-Black.eot?#iefix') format('embedded-opentype'),
+       url('./fonts/Montserrat-Black.woff') format('woff'),
+       url('./fonts/Montserrat-Black.ttf')  format('truetype'),
+       url('./fonts/Montserrat-Black.svg#32d2de489ae4ccadea255227c4d7ddfd') format('svg');
 
   font-style:   normal;
   font-weight:  800;
@@ -12,11 +12,11 @@
 
 @font-face {
   font-family: 'Montserrat';
-  src: url('./font/Montserrat-Bold.eot');
-  src: url('./font/Montserrat-Bold.eot?#iefix') format('embedded-opentype'),
-       url('./font/Montserrat-Bold.woff') format('woff'),
-       url('./font/Montserrat-Bold.ttf')  format('truetype'),
-       url('./font/Montserrat-Bold.svg#2eb9a020d90588d099da01ff1a93c338') format('svg');
+  src: url('./fonts/Montserrat-Bold.eot');
+  src: url('./fonts/Montserrat-Bold.eot?#iefix') format('embedded-opentype'),
+       url('./fonts/Montserrat-Bold.woff') format('woff'),
+       url('./fonts/Montserrat-Bold.ttf')  format('truetype'),
+       url('./fonts/Montserrat-Bold.svg#2eb9a020d90588d099da01ff1a93c338') format('svg');
 
   font-style:   normal;
   font-weight:  700;
@@ -24,11 +24,11 @@
 
 @font-face {
   font-family: 'Montserrat';
-  src: url('./font/Montserrat-Hairline.eot');
-  src: url('./font/Montserrat-Hairline.eot?#iefix') format('embedded-opentype'),
-       url('./font/Montserrat-Hairline.woff') format('woff'),
-       url('./font/Montserrat-Hairline.ttf')  format('truetype'),
-       url('./font/Montserrat-Hairline.svg#1ec624975f362ffc7a87d22144317904') format('svg');
+  src: url('./fonts/Montserrat-Hairline.eot');
+  src: url('./fonts/Montserrat-Hairline.eot?#iefix') format('embedded-opentype'),
+       url('./fonts/Montserrat-Hairline.woff') format('woff'),
+       url('./fonts/Montserrat-Hairline.ttf')  format('truetype'),
+       url('./fonts/Montserrat-Hairline.svg#1ec624975f362ffc7a87d22144317904') format('svg');
 
   font-style:   normal;
   font-weight:  100;
@@ -36,11 +36,11 @@
 
 @font-face {
   font-family: 'Montserrat';
-  src: url('./font/Montserrat-Light.eot');
-  src: url('./font/Montserrat-Light.eot?#iefix') format('embedded-opentype'),
-       url('./font/Montserrat-Light.woff') format('woff'),
-       url('./font/Montserrat-Light.ttf')  format('truetype'),
-       url('./font/Montserrat-Light.svg#c152625b71562a7bb7b752375273b2d5') format('svg');
+  src: url('./fonts/Montserrat-Light.eot');
+  src: url('./fonts/Montserrat-Light.eot?#iefix') format('embedded-opentype'),
+       url('./fonts/Montserrat-Light.woff') format('woff'),
+       url('./fonts/Montserrat-Light.ttf')  format('truetype'),
+       url('./fonts/Montserrat-Light.svg#c152625b71562a7bb7b752375273b2d5') format('svg');
 
   font-style:   normal;
   font-weight:  300;
@@ -48,11 +48,11 @@
 
 @font-face {
   font-family: 'Montserrat';
-  src: url('./font/Montserrat-Regular.eot');
-  src: url('./font/Montserrat-Regular.eot?#iefix') format('embedded-opentype'),
-       url('./font/Montserrat-Regular.woff') format('woff'),
-       url('./font/Montserrat-Regular.ttf')  format('truetype'),
-       url('./font/Montserrat-Regular.svg#95d90f2cd2aa64bdfee0e9f34c516e71') format('svg');
+  src: url('./fonts/Montserrat-Regular.eot');
+  src: url('./fonts/Montserrat-Regular.eot?#iefix') format('embedded-opentype'),
+       url('./fonts/Montserrat-Regular.woff') format('woff'),
+       url('./fonts/Montserrat-Regular.ttf')  format('truetype'),
+       url('./fonts/Montserrat-Regular.svg#95d90f2cd2aa64bdfee0e9f34c516e71') format('svg');
 
   font-style:   normal;
   font-weight:  400;
@@ -170,6 +170,7 @@ fieldset {
   position: relative;
   height: 30px;
   clear: both;
+  overflow: visible;
 }
 
 /*label {
@@ -425,4 +426,49 @@ textarea:valid + label {
 input[type=submit] {
 
   position: relative;
+  background: #333;
+  color: #fff;
+  height: 20px;
+  text-align: center;
+  text-transform: uppercase;
+  height: 40px;
+  margin-bottom: 10px;
+  letter-spacing: 0.157em;
+  cursor: pointer;
+
+  -webkit-transition:all cubic-bezier(0.450, 1.260, 0.450, 1.240) 0.6s;
+  transition:all cubic-bezier(0.450, 1.260, 0.450, 1.240) 0.6s;
+}
+
+input[type=submit]:hover {
+
+  letter-spacing: 1.2em;
+  background: #000;
+}
+
+h1 img {
+  height: 1.2em;
+  vertical-align: middle;
+}
+
+.form-additional {
+
+  height: 215px;
+}
+
+.form-additional-line {
+
+  display: block;
+  width: 100%;
+  line-height: 1em;
+  line-height: 1.1em;
+  font-width: 300;
+  padding-bottom: 10px;
+  word-break: break-all;
+  color: #acacac;
+}
+
+.form-additional-line span {
+
+  color: #333;
 }

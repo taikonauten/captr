@@ -8,16 +8,14 @@
         <!-- endbuild -->
         <!-- build:css styles/main.css -->
         <link href='http://fonts.googleapis.com/css?family=Nunito:300,400' rel='stylesheet' type='text/css'>
-        <link href="bower_components/snap.svg/dist/snap.svg-min.js" rel="stylesheet">
+        <!--<link href="bower_components/snap.svg/dist/snap.svg-min.js" rel="stylesheet">-->
         <link href="bower_components/angular/angular-csp.css" rel="stylesheet">
         <link href="styles/popup.css" rel="stylesheet">
         <!-- endbuild -->
     </head>
     <body ng-app="captr" ng-csp>
         <div ng-controller="PopupCtrl">
-          <h1>captr <span ng-show="simpleTicket">. ticket</span></h1>
-
-          <span ng-show="simpleTicket" ticket>BACK</span>
+          <h1><img src="images/ui/back.svg" ng-show="simpleTicket" ticket/>captr <span ng-show="simpleTicket">. ticket</span></h1>
 
           <div class="loader" ng-show="loading">
 
@@ -40,6 +38,7 @@
             </svg>
 
           </div>
+
 
           <div class="animate-group" ng-class="{true:'animate-move'}[simpleTicket]">
 
