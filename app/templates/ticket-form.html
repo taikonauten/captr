@@ -1,12 +1,12 @@
 <form ng-controller="FormCtrl" ng-submit="submit()" class="form form-ticket">
 
   <fieldset>
-    <select ng-model="project" ng-options="project.name for project in projects" ng-change="updateProjectMembers(project.id)" oninvalid="this.setCustomValidity('Projekt auswählen')" required></select>
+    <select ng-model="project" ng-options="project.name for project in projects" ng-change="updateProjectMembers(project.id)" required></select>
     <label>Projekt</label>
   </fieldset>
 
   <fieldset>
-    <select ng-model="tracker" ng-options="tracker.name for tracker in trackers" ng-disabled="!trackers.length" oninvalid="this.setCustomValidity('Tracker auswählen')" required></select>
+    <select ng-model="tracker" ng-options="tracker.name for tracker in trackers" ng-disabled="!trackers.length" required></select>
     <label>Tracker</label>
   </fieldset>
 
@@ -21,12 +21,12 @@
   </fieldset>
 
   <fieldset>
-    <input type="text" ng-model="issue.subject" oninvalid="this.setCustomValidity('Ein Titel muss angegeben werden')" required/>
+    <input type="text" ng-model="issue.subject" required/>
     <label>Titel</label>
   </fieldset>
 
-  <fieldset>
-    <textarea ng-model="issue.description" required></textarea>
+  <fieldset class="description">
+    <textarea rows="5" ng-model="issue.description" required></textarea>
     <label>Beschreibung</label>
   </fieldset>
 

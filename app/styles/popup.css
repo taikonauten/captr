@@ -453,7 +453,7 @@ h1 img {
 
 .form-additional {
 
-  height: 215px;
+  height: auto;
 }
 
 .form-additional-line {
@@ -471,4 +471,14 @@ h1 img {
 .form-additional-line span {
 
   color: #333;
+}
+
+fieldset.description {
+
+  height: 50px;
+}
+
+textarea {
+
+  resize: none;
 }
