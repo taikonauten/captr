@@ -14,9 +14,10 @@
         <!-- endbuild -->
     </head>
     <body ng-app="captr" ng-csp>
-        <h1>CAPTR</h1>
-
         <div ng-controller="PopupCtrl">
+          <h1>captr <span ng-show="simpleTicket">. ticket</span></h1>
+
+          <span ng-show="simpleTicket" ticket>BACK</span>
 
           <div class="loader" ng-show="loading">
 
@@ -40,52 +41,54 @@
 
           </div>
 
-          <div class="animate-hide container" ng-hide="simpleTicket">
+          <div class="animate-group" ng-class="{true:'animate-move'}[simpleTicket]">
 
-            <div class="box box-screenshot" screenshot>
+            <div class="animate-hide container">
 
-              <span class="title">SCREENSHOT</span>
+              <div class="box box-screenshot" screenshot>
 
-              <svg width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-                  <defs>
-                      <path d="M24,60 C21.791,60 20,58.209 20,56 C20,53.791 21.791,52 24,52 C26.209,52 28,53.791 28,56 C28,58.209 26.209,60 24,60 Z M44,32 L38,32 C37.448,32 37,32.447 37,33 C37,33.553 37.448,34 38,34 L44,34 C45.105,34 46,34.894 46,36 L46,42 C46,42.553 46.448,43 47,43 C47.552,43 48,42.553 48,42 L48,36 C48,33.791 46.209,32 44,32 Z M10,32 L4,32 C1.791,32 0,33.791 0,36 L0,42 C0,42.553 0.448,43 1,43 C1.552,43 2,42.553 2,42 L2,36 C2,34.894 2.895,34 4,34 L10,34 C10.552,34 11,33.553 11,33 C11,32.447 10.552,32 10,32 Z M10,78 L4,78 C2.895,78 2,77.106 2,76 L2,70 C2,69.447 1.552,69 1,69 C0.448,69 0,69.447 0,70 L0,76 C0,78.209 1.791,80 4,80 L10,80 C10.552,80 11,79.553 11,79 C11,78.447 10.552,78 10,78 Z M47,69 C46.448,69 46,69.447 46,70 L46,76 C46,77.106 45.105,78 44,78 L38,78 C37.448,78 37,78.447 37,79 C37,79.553 37.448,80 38,80 L44,80 C46.209,80 48,78.209 48,76 L48,70 C48,69.447 47.552,69 47,69 Z M24,46 C18.477,46 14,50.477 14,56 C14,61.523 18.477,66 24,66 C29.523,66 34,61.523 34,56 C34,50.477 29.523,46 24,46 Z M16,56 C16,51.582 19.582,48 24,48 C28.418,48 32,51.582 32,56 C32,60.418 28.418,64 24,64 C19.582,64 16,60.418 16,56 Z" id="path-1"></path>
-                  </defs>
-                  <g sketch:type="MSArtboardGroup" transform="translate(-950.000000, -170.000000)" id="captr.flyout">
-                      <g sketch:type="MSLayerGroup" transform="translate(928.000000, 114.000000)">
-                          <g id="btn.captr.website" transform="translate(22.000000, 24.000000)">
-                              <g>
-                                  <use id="captrscreen" fill="#9DA5AD" fill-rule="evenodd" sketch:type="MSShapeGroup" xlink:href="#path-1"></use>
-                                  <use fill="none" xlink:href="#path-1"></use>
-                              </g>
-                          </g>
-                      </g>
-                  </g>
-              </svg>
+                <span class="title">SCREENSHOT</span>
+
+                <svg width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+                    <defs>
+                        <path d="M24,60 C21.791,60 20,58.209 20,56 C20,53.791 21.791,52 24,52 C26.209,52 28,53.791 28,56 C28,58.209 26.209,60 24,60 Z M44,32 L38,32 C37.448,32 37,32.447 37,33 C37,33.553 37.448,34 38,34 L44,34 C45.105,34 46,34.894 46,36 L46,42 C46,42.553 46.448,43 47,43 C47.552,43 48,42.553 48,42 L48,36 C48,33.791 46.209,32 44,32 Z M10,32 L4,32 C1.791,32 0,33.791 0,36 L0,42 C0,42.553 0.448,43 1,43 C1.552,43 2,42.553 2,42 L2,36 C2,34.894 2.895,34 4,34 L10,34 C10.552,34 11,33.553 11,33 C11,32.447 10.552,32 10,32 Z M10,78 L4,78 C2.895,78 2,77.106 2,76 L2,70 C2,69.447 1.552,69 1,69 C0.448,69 0,69.447 0,70 L0,76 C0,78.209 1.791,80 4,80 L10,80 C10.552,80 11,79.553 11,79 C11,78.447 10.552,78 10,78 Z M47,69 C46.448,69 46,69.447 46,70 L46,76 C46,77.106 45.105,78 44,78 L38,78 C37.448,78 37,78.447 37,79 C37,79.553 37.448,80 38,80 L44,80 C46.209,80 48,78.209 48,76 L48,70 C48,69.447 47.552,69 47,69 Z M24,46 C18.477,46 14,50.477 14,56 C14,61.523 18.477,66 24,66 C29.523,66 34,61.523 34,56 C34,50.477 29.523,46 24,46 Z M16,56 C16,51.582 19.582,48 24,48 C28.418,48 32,51.582 32,56 C32,60.418 28.418,64 24,64 C19.582,64 16,60.418 16,56 Z" id="path-1"></path>
+                    </defs>
+                    <g sketch:type="MSArtboardGroup" transform="translate(-950.000000, -170.000000)" id="captr.flyout">
+                        <g sketch:type="MSLayerGroup" transform="translate(928.000000, 114.000000)">
+                            <g id="btn.captr.website" transform="translate(22.000000, 24.000000)">
+                                <g>
+                                    <use id="captrscreen" fill="#9DA5AD" fill-rule="evenodd" sketch:type="MSShapeGroup" xlink:href="#path-1"></use>
+                                    <use fill="none" xlink:href="#path-1"></use>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </svg>
+
+              </div>
+
+              <div class="box box-ticket" ticket>
+
+                <span class="title">TICKET</span>
+
+                <svg width="32px" height="42px" viewBox="0 0 32 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+                    <g id="cptr---addon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+                        <g sketch:type="MSArtboardGroup" transform="translate(-1051.000000, -173.000000)" id="captrflyout" fill="#9DA5AD">
+                            <g sketch:type="MSLayerGroup" transform="translate(928.000000, 114.000000)">
+                                <g id="btn.captr.selection-2" transform="translate(114.000000, 24.000000)" sketch:type="MSShapeGroup">
+                                    <path d="M9.91,35 C9.965,35.326 10,35.658 10,36 C10,36.342 9.965,36.674 9.91,37 L38.09,37 C38.035,36.674 38,36.342 38,36 C38,35.658 38.035,35.326 38.09,35 L9.91,35 Z M10.09,61 C10.09,61.342 10.055,61.674 10,62 L38.18,62 C38.125,61.674 38.09,61.342 38.09,61 C38.09,60.658 38.125,60.326 38.18,60 L10,60 C10.055,60.326 10.09,60.658 10.09,61 Z M19.4393187,76 C19.4393187,76.342 19.427917,76.674 19.41,77 L28.59,77 C28.572083,76.674 28.5606813,76.342 28.5606813,76 C28.5606813,75.658 28.572083,75.326 28.59,75 L19.41,75 C19.427917,75.326 19.4393187,75.658 19.4393187,76 Z M10.0635877,66 C10.0635877,66.342 10.0388591,66.674 10,67 L29.91,67 C29.8711409,66.674 29.8464123,66.342 29.8464123,66 C29.8464123,65.658 29.8711409,65.326 29.91,65 L10,65 C10.0388591,65.326 10.0635877,65.658 10.0635877,66 Z M9.91,55 C9.965,55.326 10,55.658 10,56 C10,56.342 9.965,56.674 9.91,57 L38.09,57 C38.035,56.674 38,56.342 38,56 C38,55.658 38.035,55.326 38.09,55 L9.91,55 Z M10.0635877,41 C10.0635877,41.342 10.0388591,41.674 10,42 L29.91,42 C29.8711409,41.674 29.8464123,41.342 29.8464123,41 C29.8464123,40.658 29.8711409,40.326 29.91,40 L10,40 C10.0388591,40.326 10.0635877,40.658 10.0635877,41 Z M9.91,45 C9.965,45.326 10,45.658 10,46 C10,46.342 9.965,46.674 9.91,47 L38.09,47 C38.035,46.674 38,46.342 38,46 C38,45.658 38.035,45.326 38.09,45 L9.91,45 Z M9.91,50 C9.95684173,50.326 9.98665011,50.658 9.98665011,51 C9.98665011,51.342 9.95684173,51.674 9.91,52 L33.91,52 C33.8631583,51.674 33.8333499,51.342 33.8333499,51 C33.8333499,50.658 33.8631583,50.326 33.91,50 L9.91,50 Z" id="ticket"></path>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </svg>
+              </div>
 
             </div>
 
-            <div class="box box-ticket" ticket>
-
-              <span class="title">TICKET</span>
-
-              <svg width="32px" height="42px" viewBox="0 0 32 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-                  <g id="cptr---addon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-                      <g sketch:type="MSArtboardGroup" transform="translate(-1051.000000, -173.000000)" id="captrflyout" fill="#9DA5AD">
-                          <g sketch:type="MSLayerGroup" transform="translate(928.000000, 114.000000)">
-                              <g id="btn.captr.selection-2" transform="translate(114.000000, 24.000000)" sketch:type="MSShapeGroup">
-                                  <path d="M9.91,35 C9.965,35.326 10,35.658 10,36 C10,36.342 9.965,36.674 9.91,37 L38.09,37 C38.035,36.674 38,36.342 38,36 C38,35.658 38.035,35.326 38.09,35 L9.91,35 Z M10.09,61 C10.09,61.342 10.055,61.674 10,62 L38.18,62 C38.125,61.674 38.09,61.342 38.09,61 C38.09,60.658 38.125,60.326 38.18,60 L10,60 C10.055,60.326 10.09,60.658 10.09,61 Z M19.4393187,76 C19.4393187,76.342 19.427917,76.674 19.41,77 L28.59,77 C28.572083,76.674 28.5606813,76.342 28.5606813,76 C28.5606813,75.658 28.572083,75.326 28.59,75 L19.41,75 C19.427917,75.326 19.4393187,75.658 19.4393187,76 Z M10.0635877,66 C10.0635877,66.342 10.0388591,66.674 10,67 L29.91,67 C29.8711409,66.674 29.8464123,66.342 29.8464123,66 C29.8464123,65.658 29.8711409,65.326 29.91,65 L10,65 C10.0388591,65.326 10.0635877,65.658 10.0635877,66 Z M9.91,55 C9.965,55.326 10,55.658 10,56 C10,56.342 9.965,56.674 9.91,57 L38.09,57 C38.035,56.674 38,56.342 38,56 C38,55.658 38.035,55.326 38.09,55 L9.91,55 Z M10.0635877,41 C10.0635877,41.342 10.0388591,41.674 10,42 L29.91,42 C29.8711409,41.674 29.8464123,41.342 29.8464123,41 C29.8464123,40.658 29.8711409,40.326 29.91,40 L10,40 C10.0388591,40.326 10.0635877,40.658 10.0635877,41 Z M9.91,45 C9.965,45.326 10,45.658 10,46 C10,46.342 9.965,46.674 9.91,47 L38.09,47 C38.035,46.674 38,46.342 38,46 C38,45.658 38.035,45.326 38.09,45 L9.91,45 Z M9.91,50 C9.95684173,50.326 9.98665011,50.658 9.98665011,51 C9.98665011,51.342 9.95684173,51.674 9.91,52 L33.91,52 C33.8631583,51.674 33.8333499,51.342 33.8333499,51 C33.8333499,50.658 33.8631583,50.326 33.91,50 L9.91,50 Z" id="ticket"></path>
-                              </g>
-                          </g>
-                      </g>
-                  </g>
-              </svg>
-            </div>
+            <div class="container-form animate-show" ng-include="'templates/ticket-form.html'" ng-show="simpleTicket"></div>
 
           </div>
-
-          <div class="container-form animate-show" ng-show="simpleTicket" ng-include="'templates/ticket-form.html'"></div>
-
-          <span ng-show="simpleTicket" ticket>BACK</span>
 
         </div>
 
@@ -93,7 +96,7 @@
         <!-- bower:js -->
         <script src="bower_components/angular/angular.js"></script>
         <script src="bower_components/angular-animate/angular-animate.js"></script>
-        <script src="bower_components/snap.svg/dist/snap.svg-min.js"></script>
+        <!--<script src="bower_components/snap.svg/dist/snap.svg-min.js"></script>-->
         <!-- endbower -->
         <!-- endbuild -->
 

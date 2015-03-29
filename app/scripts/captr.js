@@ -78,8 +78,8 @@ app.controller('OptionsCtrl', ['$scope','Redmine', 'Config', function($scope, Re
 
   $scope.options = {
 
-    "url" : ((localStorage.getItem("options-redmine")) ? localStorage.getItem("options-redmine") : "URL"),
-    "apikey" : ((localStorage.getItem("options-apikey")) ? localStorage.getItem("options-apikey") : "X-Redmine-API-Key")
+    "url" : ((localStorage.getItem("options-redmine")) ? localStorage.getItem("options-redmine") : "Redmine URL eingeben"),
+    "apikey" : ((localStorage.getItem("options-apikey")) ? localStorage.getItem("options-apikey") : "X-Redmine-API-Key eingeben")
   };
 
   $scope.saveOptions = function() {
@@ -100,12 +100,12 @@ app.controller('OptionsCtrl', ['$scope','Redmine', 'Config', function($scope, Re
     Redmine.projects()
     .success(function(data/*,status*/) {
 
-      $scope.options.access = "ALL GOOD!";
+      $scope.options.access = "Good to go!";
       //$scope.options.error = "Status: "+ status;
     })
     .error(function(data,status,headers,config) {
 
-      $scope.options.access = "ERROR - Please update your information";
+      $scope.options.access = "Es ist ein Fehler aufgetreten - bitte trage die richtigen Daten ein.";
       //$scope.options.error = "Status: "+ status;
     });
   };
@@ -139,20 +139,20 @@ app.controller('FormCtrl', ['$rootScope','$scope','Redmine','Canvas', function($
     console.log('error',data);
   });
 
-  //retrieve all trackers
-  Redmine.trackers().
-  success(function(data, status, headers, config) {
-
-    console.log('success',data);
-    $scope.trackers = data.trackers;
-  }).
-  error(function(data, status, headers, config) {
-
-    console.log('error',data);
-  });
-
   //update user list
   $scope.updateProjectMembers = function(projectId) {
+
+    //retrieve trackers on project
+    Redmine.trackers(projectId).
+    success(function(data, status, headers, config) {
+
+      console.log('success',data);
+      $scope.trackers = data.trackers;
+    }).
+    error(function(data, status, headers, config) {
+
+      console.log('error',data);
+    });
 
     //retrieve members
     Redmine.memberships(projectId).
@@ -551,9 +551,9 @@ app.factory('Redmine', ['$http','Config', function($http, Config) {
       return $http.get(Config.getCategoryUrl(projectId), {headers:Config.getJsonHeader()});
     },
 
-    trackers: function () {
+    trackers: function (projectId) {
 
-      return $http.get(Config.getTrackersUrl(), {headers:Config.getJsonHeader(), params:{limit:100}});
+      return $http.get(Config.getTrackersUrl(projectId), {headers:Config.getJsonHeader(), params:{limit:100}});
     },
 
     upload: function (image) {

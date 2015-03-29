@@ -1,8 +1,8 @@
 {
     "name": "captr",
-    "version": "0.0.4",
-    "manifest_version": 3,
-    "description": "send screenshots to redmine",
+    "version": "0.1.0",
+    "manifest_version": 5,
+    "description": "send tickets or screenshots to redmine",
     "icons": {
         "16": "images/icon-16.png",
         "128": "images/icon-128.png"

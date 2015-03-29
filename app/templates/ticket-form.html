@@ -2,12 +2,12 @@
 
   <fieldset>
     <label>Projekt</label>
-    <select ng-model="project" ng-options="project.name for project in projects" ng-change="updateProjectMembers(project.id)" required></select>
+    <select ng-model="project" ng-options="project.name for project in projects" ng-change="updateProjectMembers(project.id)" oninvalid="this.setCustomValidity('Projekt auswählen')" required></select>
   </fieldset>
 
   <fieldset>
     <label>Tracker</label>
-    <select ng-model="tracker" ng-options="tracker.name for tracker in trackers" required></select>
+    <select ng-model="tracker" ng-options="tracker.name for tracker in trackers" ng-disabled="!trackers.length" oninvalid="this.setCustomValidity('Tracker auswählen')" required></select>
   </fieldset>
 
   <fieldset>
@@ -22,7 +22,7 @@
 
   <fieldset>
     <label>Titel</label>
-    <input type="text" ng-model="issue.subject" required/><br />
+    <input type="text" ng-model="issue.subject" oninvalid="this.setCustomValidity('Ein Titel muss angegeben werden')" required/><br />
   </fieldset>
 
   <fieldset>
