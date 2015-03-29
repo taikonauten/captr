@@ -70,9 +70,14 @@ body {
 
 canvas {
 
-  width: 80%;
+  width: 60%;
   image-rendering: -webkit-optimize-contrast;
   image-rendering: optimize-contrast;
+}
+
+#editor form {
+
+  width: 40%;
 }
 
 #d, #r {

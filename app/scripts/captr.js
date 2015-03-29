@@ -15,7 +15,7 @@ var app = angular.module('captr', ['ngAnimate']);
   CONSTANTS
 
 */
-app.constant("RELATIVE_WIDTH","0.8");
+app.constant("RELATIVE_WIDTH","0.6");
 
 /*
   CONTROLLER
@@ -141,18 +141,6 @@ app.controller('FormCtrl', ['$rootScope','$scope','Redmine','Canvas', function($
 
   //update user list
   $scope.updateProjectMembers = function(projectId) {
-
-    //retrieve trackers on project
-    Redmine.trackers(projectId).
-    success(function(data, status, headers, config) {
-
-      console.log('success',data);
-      $scope.trackers = data.trackers;
-    }).
-    error(function(data, status, headers, config) {
-
-      console.log('error',data);
-    });
 
     //retrieve members
     Redmine.memberships(projectId).

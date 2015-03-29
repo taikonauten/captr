@@ -70,6 +70,7 @@ body {
   width: 300px;
   height: 200px;
   margin: 0;
+  font-size: 14px;
 }
 
 h1 {
@@ -117,6 +118,7 @@ h1 {
 .form-ticket {
 
   width: 300px;
+  padding: 0 10px;
 }
 
 .animate-group {
@@ -133,8 +135,6 @@ h1 {
 .animate-group {
 
   -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.6s;
-  -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.6s;
-  -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.6s;
   transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.6s;
 }
 
@@ -158,4 +158,271 @@ h1 {
 .animate-move {
 
   margin-left: -300px;
+}
+
+
+
+
+
+fieldset {
+  border: 0 none;
+  padding: 20px 10px;
+  position: relative;
+  height: 30px;
+  clear: both;
+}
+
+/*label {
+
+  display: block;
+  position: absolute;
+  margin-top: 2px;
+  width: 100%;
+  line-height: 1.2em;
+  color: #aaa;
+
+  -webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.6s;
+  transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.6s;
+}
+
+input {
+
+  display: block;
+  position: absolute;
+  top: 1.2em;
+  width: 100%;
+  border: 0;
+  z-index: 1;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+
+  -webkit-transition: top ;
+  transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.6s;
+}
+
+input:focus{
+
+  outline: 0;
+  border-bottom: 1px solid #333;
+}
+
+input:focus + label {
+
+  top: 0;
+  font-size: 0.8em;
+  color: #333;
+}*/
+
+input,
+select,
+textarea {
+
+  display: block;
+  position: absolute;
+  width: 100%;
+  border: 0;
+  top: 1.2em;
+  background: none;
+  z-index: 1;
+  padding: 1px;
+  font-size: 1em;
+  letter-spacing: 0.012em;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+
+  outline: 0;
+}
+
+label {
+
+  display: block;
+  position: absolute;
+  margin-top: 2px;
+  padding: 1px;
+  letter-spacing: 0.012em;
+  color: #ACACAC;
+  font-size: 1em;
+  -webkit-animation-name: labelIn;
+          animation-name: labelIn;
+  -webkit-animation-duration: 0.35s;
+          animation-duration: 0.35s;
+  -webkit-animation-direction: reverse;
+          animation-direction: reverse;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+  -webkit-animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
+          animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+input:focus + label,
+select:focus + label,
+input:valid + label,
+select:checked + label,
+textarea:focus + label,
+textarea:valid + label {
+  -webkit-animation-name: labelOut;
+          animation-name: labelOut;
+  -webkit-animation-duration: 0.35s;
+          animation-duration: 0.35s;
+  -webkit-animation-direction: normal;
+          animation-direction: normal;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+  -webkit-animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
+          animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+@-webkit-keyframes labelIn {
+  0% {
+    left: 1px;
+    opacity: 1;
+    top: 1.2em;
+    font-size: 1em;
+    font-weight: 300;
+  }
+  50% {
+    font-size: 1em;
+    left: 1em;
+    opacity: 0;
+    top: 1.2em;
+    font-weight: 300;
+  }
+  50.01% {
+    font-size: 0.65em;
+    left: 1em;
+    opacity: 0;
+    top: 0.2em;
+    color: #333;
+    font-weight: 400;
+  }
+  100% {
+    font-size: 0.65em;
+    opacity: 1;
+    left: 1px;
+    top: 0.2em;
+    color: #333;
+    font-weight: 400;
+  }
+}
+@keyframes labelIn {
+  0% {
+    left: 1px;
+    opacity: 1;
+    top: 1.2em;
+    font-size: 1em;
+    font-weight: 300;
+  }
+  50% {
+    font-size: 1em;
+    left: 1em;
+    opacity: 0;
+    top: 1.2em;
+    font-weight: 300;
+  }
+  50.01% {
+    font-size: 0.65em;
+    left: 1em;
+    opacity: 0;
+    top: 0.2em;
+    color: #333;
+    font-weight: 400;
+  }
+  100% {
+    font-size: 0.65em;
+    opacity: 1;
+    left: 1px;
+    top: 0.2em;
+    color: #333;
+    font-weight: 400;
+  }
+}
+
+@-webkit-keyframes labelOut {
+  0% {
+    left: 1px;
+    opacity: 1;
+    top: 1.2em;
+    font-size: 1em;
+    font-weight: 300;
+  }
+  50% {
+    font-size: 1em;
+    left: 1em;
+    opacity: 0;
+    top: 1.2em;
+    font-weight: 300;
+  }
+  50.01% {
+    font-size: 0.65em;
+    left: 1em;
+    opacity: 0;
+    top: 0.2em;
+    color: #333;
+    font-weight: 400;
+  }
+  100% {
+    font-size: 0.65em;
+    opacity: 1;
+    left: 1px;
+    top: 0.2em;
+    color: #333;
+    font-weight: 400;
+  }
+}
+@keyframes labelOut {
+  0% {
+    left: 1px;
+    opacity: 1;
+    top: 1.2em;
+    font-size: 1em;
+    font-weight: 300;
+  }
+  50% {
+    font-size: 1em;
+    left: 1em;
+    opacity: 0;
+    top: 1.2em;
+    font-weight: 300;
+  }
+  50.01% {
+    font-size: 0.65em;
+    left: 1em;
+    opacity: 0;
+    top: 0.2em;
+    color: #333;
+    font-weight: 400;
+  }
+  100% {
+    font-size: 0.65em;
+    opacity: 1;
+    left: 1px;
+    top: 0.2em;
+    color: #333;
+    font-weight: 400;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+input[type=submit] {
+
+  position: relative;
 }
