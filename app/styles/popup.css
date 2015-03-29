@@ -234,6 +234,7 @@ input:focus,
 select:focus,
 textarea:focus {
 
+  border-bottom: 1px solid #333;
   outline: 0;
 }
 
@@ -264,6 +265,7 @@ input:valid + label,
 select:checked + label,
 textarea:focus + label,
 textarea:valid + label {
+
   -webkit-animation-name: labelOut;
           animation-name: labelOut;
   -webkit-animation-duration: 0.35s;
@@ -443,7 +445,8 @@ input[type=submit] {
 input[type=submit]:hover {
 
   letter-spacing: 1.2em;
-  background: #000;
+  background: #6CBDB5;
+  color: #353432;
 }
 
 h1 img {
