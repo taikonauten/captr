@@ -12,14 +12,14 @@
   <!-- endbuild -->
 </head>
 <body ng-app="captr" ng-csp>
-  <h1>Editor</h1>
+  <h1>captr . editor</h1>
   <div id="editor" ng-controller="EditorCtrl">
     <!-- TODO: USE SINGLE CANVAS!!  -->
     <canvas id="c" editor></canvas>
     <canvas id="d" draw></canvas>
   </div>
 
-  <div ng-include="'templates/ticket-form.html'"></div>
+  <div class="ticket-form" ng-include="'templates/ticket-form.html'"></div>
 
   <!-- build:js scripts/vendor.js -->
   <!-- bower:js -->

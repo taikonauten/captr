@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'Montserrat';
-  src: url('Montserrat-Black.eot');
-  src: url('Montserrat-Black.eot?#iefix') format('embedded-opentype'),
-       url('Montserrat-Black.woff') format('woff'),
-       url('Montserrat-Black.ttf')  format('truetype'),
-       url('Montserrat-Black.svg#32d2de489ae4ccadea255227c4d7ddfd') format('svg');
+  src: url('./fonts/Montserrat-Black.eot');
+  src: url('./fonts/Montserrat-Black.eot?#iefix') format('embedded-opentype'),
+       url('./fonts/Montserrat-Black.woff') format('woff'),
+       url('./fonts/Montserrat-Black.ttf')  format('truetype'),
+       url('./fonts/Montserrat-Black.svg#32d2de489ae4ccadea255227c4d7ddfd') format('svg');
 
   font-style:   normal;
   font-weight:  800;
@@ -12,11 +12,11 @@
 
 @font-face {
   font-family: 'Montserrat';
-  src: url('./styles/font/Montserrat-Bold.eot');
-  src: url('./styles/fonts/Montserrat-Bold.eot?#iefix') format('embedded-opentype'),
-       url('./styles/fonts/Montserrat-Bold.woff') format('woff'),
-       url('./styles/fonts/Montserrat-Bold.ttf')  format('truetype'),
-       url('./styles/fonts/Montserrat-Bold.svg#2eb9a020d90588d099da01ff1a93c338') format('svg');
+  src: url('./fonts/Montserrat-Bold.eot');
+  src: url('./fonts/Montserrat-Bold.eot?#iefix') format('embedded-opentype'),
+       url('./fonts/Montserrat-Bold.woff') format('woff'),
+       url('./fonts/Montserrat-Bold.ttf')  format('truetype'),
+       url('./fonts/Montserrat-Bold.svg#2eb9a020d90588d099da01ff1a93c338') format('svg');
 
   font-style:   normal;
   font-weight:  700;
@@ -24,11 +24,11 @@
 
 @font-face {
   font-family: 'Montserrat';
-  src: url('./styles/font/Montserrat-Hairline.eot');
-  src: url('./styles/font/Montserrat-Hairline.eot?#iefix') format('embedded-opentype'),
-       url('./styles/font/Montserrat-Hairline.woff') format('woff'),
-       url('./styles/font/Montserrat-Hairline.ttf')  format('truetype'),
-       url('./styles/font/Montserrat-Hairline.svg#1ec624975f362ffc7a87d22144317904') format('svg');
+  src: url('./fonts/Montserrat-Hairline.eot');
+  src: url('./fonts/Montserrat-Hairline.eot?#iefix') format('embedded-opentype'),
+       url('./fonts/Montserrat-Hairline.woff') format('woff'),
+       url('./fonts/Montserrat-Hairline.ttf')  format('truetype'),
+       url('./fonts/Montserrat-Hairline.svg#1ec624975f362ffc7a87d22144317904') format('svg');
 
   font-style:   normal;
   font-weight:  100;
@@ -36,11 +36,11 @@
 
 @font-face {
   font-family: 'Montserrat';
-  src: url('./styles/font/Montserrat-Light.eot');
-  src: url('./styles/font/Montserrat-Light.eot?#iefix') format('embedded-opentype'),
-       url('./styles/font/Montserrat-Light.woff') format('woff'),
-       url('./styles/font/Montserrat-Light.ttf')  format('truetype'),
-       url('./styles/font/Montserrat-Light.svg#c152625b71562a7bb7b752375273b2d5') format('svg');
+  src: url('./fonts/Montserrat-Light.eot');
+  src: url('./fonts/Montserrat-Light.eot?#iefix') format('embedded-opentype'),
+       url('./fonts/Montserrat-Light.woff') format('woff'),
+       url('./fonts/Montserrat-Light.ttf')  format('truetype'),
+       url('./fonts/Montserrat-Light.svg#c152625b71562a7bb7b752375273b2d5') format('svg');
 
   font-style:   normal;
   font-weight:  300;
@@ -48,11 +48,11 @@
 
 @font-face {
   font-family: 'Montserrat';
-  src: url('./styles/font/Montserrat-Regular.eot');
-  src: url('./styles/font/Montserrat-Regular.eot?#iefix') format('embedded-opentype'),
-       url('./styles/font/Montserrat-Regular.woff') format('woff'),
-       url('./styles/font/Montserrat-Regular.ttf')  format('truetype'),
-       url('./styles/font/Montserrat-Regular.svg#95d90f2cd2aa64bdfee0e9f34c516e71') format('svg');
+  src: url('./fonts/Montserrat-Regular.eot');
+  src: url('./fonts/Montserrat-Regular.eot?#iefix') format('embedded-opentype'),
+       url('./fonts/Montserrat-Regular.woff') format('woff'),
+       url('./fonts/Montserrat-Regular.ttf')  format('truetype'),
+       url('./fonts/Montserrat-Regular.svg#95d90f2cd2aa64bdfee0e9f34c516e71') format('svg');
 
   font-style:   normal;
   font-weight:  400;
@@ -68,22 +68,37 @@ body {
   font-family: 'Montserrat','Helvetica',sans-serif;
 }
 
+h1 {
+
+  border-bottom: 3px solid #333;
+  padding-bottom: 10px;
+  margin-bottom: 50px;
+  width: 30%;
+}
+
 canvas {
-
-  width: 60%;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: optimize-contrast;
-}
-
-#editor form {
-
-  width: 40%;
-}
-
-#d, #r {
 
   position: absolute;
   left: 0;
+  top: 0;
+  width: 100%;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: optimize-contrast;
+  cursor: crosshair;
+}
+
+#editor {
+
+  width: 70%;
+  float: left;
+  padding: 10px;
+  position: relative;
+  overflow: visible;
+}
+
+#d {
+
+  border: 3px dashed #333;
 }
 
 #r {
@@ -91,59 +106,35 @@ canvas {
   z-index: -1;
 }
 
+.ticket-form {
+
+  width: 30%;
+  padding: 0 20px;
+  float: left;
+}
 
 fieldset {
+
   border: 0 none;
-  padding: 15px 10px;
+  padding: 20px 10px;
   position: relative;
   height: 30px;
   clear: both;
   overflow: visible;
 }
 
-/*label {
+select{
 
-  display: block;
-  position: absolute;
-  margin-top: 2px;
-  width: 100%;
-  line-height: 1.2em;
-  color: #aaa;
-
-  -webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.6s;
-  transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.6s;
+   -webkit-appearance: none;
+   -moz-appearance:    none;
+   appearance:         none;
+   -webkit-border-radius: 0;  /* Safari 3-4, iOS 1-3.2, Android 1.6- */
+   -moz-border-radius: 0;  /* Firefox 1-3.6 */
+   border-radius: 0;  /* Opera 10.5, IE 9, Safari 5, Chrome, Firefox 4, iOS 4, Android 2.1+ */
 }
-
-input {
-
-  display: block;
-  position: absolute;
-  top: 1.2em;
-  width: 100%;
-  border: 0;
-  z-index: 1;
-  background: transparent;
-  border-bottom: 1px solid transparent;
-
-  -webkit-transition: top ;
-  transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.6s;
-}
-
-input:focus{
-
-  outline: 0;
-  border-bottom: 1px solid #333;
-}
-
-input:focus + label {
-
-  top: 0;
-  font-size: 0.8em;
-  color: #333;
-}*/
 
 input,
-/*select,*/
+select,
 textarea {
 
   display: block;
@@ -156,13 +147,17 @@ textarea {
   padding: 1px;
   font-size: 1em;
   letter-spacing: 0.012em;
-  height: 100%;
+  border-bottom: 0px solid transparent;
+
+  -webkit-transition: border cubic-bezier(0.77, 1.60, 0.175, 1) 0.3s;
+  transition: border cubic-bezier(0.77, 1.60, 0.175, 1) 0.3s;
 }
 
 input:focus,
 select:focus,
 textarea:focus {
 
+  border-bottom: 3px solid #333;
   outline: 0;
 }
 
@@ -170,6 +165,7 @@ label {
 
   display: block;
   position: absolute;
+  margin-top: 2px;
   padding: 1px;
   letter-spacing: 0.012em;
   color: #ACACAC;
@@ -186,22 +182,10 @@ label {
           animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
-input:focus,
-select:focus,
-input:valid,
-select:valid,
-textarea:focus,
-textarea:valid {
-
-  border-bottom: 1px solid #333;
-  border-radius: 0;
-
-}
-
 input:focus + label,
 select:focus + label,
 input:valid + label,
-select:checked + label,
+select:valid + label,
 textarea:focus + label,
 textarea:valid + label {
 
@@ -381,14 +365,9 @@ input[type=submit] {
   transition:all cubic-bezier(0.450, 1.260, 0.450, 1.240) 0.6s;
 }
 
-/*select + label {
-
-  top: 0.2em !important;
-  font-size: 1em;
-  color: #333;
-}*/
-
-input[type=submit]:hover {
+input[type=submit]:hover,
+input[type=submit]:focus,
+input[type=submit]:active {
 
   letter-spacing: 1.2em;
   background: #6CBDB5;
@@ -396,6 +375,7 @@ input[type=submit]:hover {
 }
 
 h1 img {
+
   height: 1.2em;
   vertical-align: middle;
 }
@@ -403,7 +383,6 @@ h1 img {
 .form-additional {
 
   height: auto;
-  border-top: 1px solid #333;
 }
 
 .form-additional-line {
@@ -421,4 +400,20 @@ h1 img {
 .form-additional-line span {
 
   color: #333;
+}
+
+fieldset.description {
+
+  height: 100px;
+}
+
+textarea {
+
+  resize: none;
+}
+
+select:disabled + label {
+
+  color: #aaa;
+  text-decoration: line-through;
 }
