@@ -15,7 +15,7 @@ var app = angular.module('captr', ['ngAnimate']);
   CONSTANTS
 
 */
-app.constant("RELATIVE_WIDTH","0.6");
+app.constant("RELATIVE_WIDTH","0.7");
 
 /*
   CONTROLLER
@@ -133,6 +133,10 @@ app.controller('FormCtrl', ['$rootScope','$scope','Redmine','Canvas', function($
     console.log('success',data);
     $scope.projects = data.projects;
 
+    $scope.project = $scope.projects[0];
+
+    $scope.updateProjectMembers($scope.projects[0].id);
+
   }).
   error(function(data, status, headers, config) {
 
@@ -145,6 +149,8 @@ app.controller('FormCtrl', ['$rootScope','$scope','Redmine','Canvas', function($
 
     console.log('success',data);
     $scope.trackers = data.trackers;
+
+    $scope.tracker = $scope.trackers[0];
 
   }).
   error(function(data, status, headers, config) {
@@ -161,6 +167,9 @@ app.controller('FormCtrl', ['$rootScope','$scope','Redmine','Canvas', function($
 
       console.log('success',data);
       $scope.memberships = data.memberships;
+
+      $scope.selectedMember = $scope.memberships[0].user.id;
+
     }).
     error(function(data, status, headers, config) {
 
@@ -173,6 +182,9 @@ app.controller('FormCtrl', ['$rootScope','$scope','Redmine','Canvas', function($
 
       console.log('success',data);
       $scope.issue_categories = data.issue_categories;
+
+      $scope.category = $scope.issue_categories[0];
+
     }).
     error(function(data, status, headers, config) {
 
@@ -405,7 +417,7 @@ app.directive("draw", ['RELATIVE_WIDTH', function(relativeWidth){
       function draw(){
 
         // draw it
-        ctx.strokeStyle = "#F4BA41";
+        ctx.strokeStyle = "#6CBDB5";
         ctx.lineWidth   = 3;
         ctx.strokeRect(rect.startX, rect.startY, rect.width, rect.height);
 

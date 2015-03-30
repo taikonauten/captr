@@ -1,0 +1,394 @@
+@font-face {
+  font-family: 'Montserrat';
+  src: url('./fonts/Montserrat-Black.eot');
+  src: url('./fonts/Montserrat-Black.eot?#iefix') format('embedded-opentype'),
+       url('./fonts/Montserrat-Black.woff') format('woff'),
+       url('./fonts/Montserrat-Black.ttf')  format('truetype'),
+       url('./fonts/Montserrat-Black.svg#32d2de489ae4ccadea255227c4d7ddfd') format('svg');
+
+  font-style:   normal;
+  font-weight:  800;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('./fonts/Montserrat-Bold.eot');
+  src: url('./fonts/Montserrat-Bold.eot?#iefix') format('embedded-opentype'),
+       url('./fonts/Montserrat-Bold.woff') format('woff'),
+       url('./fonts/Montserrat-Bold.ttf')  format('truetype'),
+       url('./fonts/Montserrat-Bold.svg#2eb9a020d90588d099da01ff1a93c338') format('svg');
+
+  font-style:   normal;
+  font-weight:  700;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('./fonts/Montserrat-Hairline.eot');
+  src: url('./fonts/Montserrat-Hairline.eot?#iefix') format('embedded-opentype'),
+       url('./fonts/Montserrat-Hairline.woff') format('woff'),
+       url('./fonts/Montserrat-Hairline.ttf')  format('truetype'),
+       url('./fonts/Montserrat-Hairline.svg#1ec624975f362ffc7a87d22144317904') format('svg');
+
+  font-style:   normal;
+  font-weight:  100;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('./fonts/Montserrat-Light.eot');
+  src: url('./fonts/Montserrat-Light.eot?#iefix') format('embedded-opentype'),
+       url('./fonts/Montserrat-Light.woff') format('woff'),
+       url('./fonts/Montserrat-Light.ttf')  format('truetype'),
+       url('./fonts/Montserrat-Light.svg#c152625b71562a7bb7b752375273b2d5') format('svg');
+
+  font-style:   normal;
+  font-weight:  300;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('./fonts/Montserrat-Regular.eot');
+  src: url('./fonts/Montserrat-Regular.eot?#iefix') format('embedded-opentype'),
+       url('./fonts/Montserrat-Regular.woff') format('woff'),
+       url('./fonts/Montserrat-Regular.ttf')  format('truetype'),
+       url('./fonts/Montserrat-Regular.svg#95d90f2cd2aa64bdfee0e9f34c516e71') format('svg');
+
+  font-style:   normal;
+  font-weight:  400;
+}
+
+* {
+
+  box-sizing: border-box;
+}
+
+body {
+
+  font-family: 'Montserrat','Helvetica',sans-serif;
+  font-size: 14px;
+}
+
+h1 {
+
+  border-bottom: 3px solid #333;
+  padding-bottom: 10px;
+  margin-bottom: 50px;
+}
+
+form {
+
+  width: 30%;
+}
+
+.report {
+
+  margin-top: 50px;
+  font-size: 1.3em;
+  text-align: center;
+}
+
+fieldset {
+
+  border: 0 none;
+  padding: 20px 10px;
+  position: relative;
+  height: 30px;
+  clear: both;
+  overflow: visible;
+}
+
+select{
+
+   -webkit-appearance: none;
+   -moz-appearance:    none;
+   appearance:         none;
+   -webkit-border-radius: 0;  /* Safari 3-4, iOS 1-3.2, Android 1.6- */
+   -moz-border-radius: 0;  /* Firefox 1-3.6 */
+   border-radius: 0;  /* Opera 10.5, IE 9, Safari 5, Chrome, Firefox 4, iOS 4, Android 2.1+ */
+}
+
+input,
+select,
+textarea {
+
+  display: block;
+  position: absolute;
+  width: 100%;
+  border: 0;
+  top: 1.2em;
+  background: none;
+  z-index: 1;
+  padding: 1px;
+  font-size: 1em;
+  letter-spacing: 0.012em;
+  border-bottom: 0px solid transparent;
+
+  -webkit-transition: border cubic-bezier(0.77, 1.60, 0.175, 1) 0.3s;
+  transition: border cubic-bezier(0.77, 1.60, 0.175, 1) 0.3s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+
+  border-bottom: 3px solid #333;
+  outline: 0;
+}
+
+label {
+
+  display: block;
+  position: absolute;
+  margin-top: 2px;
+  padding: 1px;
+  letter-spacing: 0.012em;
+  color: #ACACAC;
+  font-size: 1em;
+  -webkit-animation-name: labelIn;
+          animation-name: labelIn;
+  -webkit-animation-duration: 0.35s;
+          animation-duration: 0.35s;
+  -webkit-animation-direction: reverse;
+          animation-direction: reverse;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+  -webkit-animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
+          animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+input:focus + label,
+select:focus + label,
+input:valid + label,
+select:valid + label,
+textarea:focus + label,
+textarea:valid + label {
+
+  -webkit-animation-name: labelOut;
+          animation-name: labelOut;
+  -webkit-animation-duration: 0.35s;
+          animation-duration: 0.35s;
+  -webkit-animation-direction: normal;
+          animation-direction: normal;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+  -webkit-animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
+          animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+@-webkit-keyframes labelIn {
+  0% {
+    left: 1px;
+    opacity: 1;
+    top: 1.2em;
+    font-size: 1em;
+    font-weight: 300;
+  }
+  50% {
+    font-size: 1em;
+    left: 1em;
+    opacity: 0;
+    top: 1.2em;
+    font-weight: 300;
+  }
+  50.01% {
+    font-size: 0.65em;
+    left: 1em;
+    opacity: 0;
+    top: 0.2em;
+    color: #333;
+    font-weight: 400;
+  }
+  100% {
+    font-size: 0.65em;
+    opacity: 1;
+    left: 1px;
+    top: 0.2em;
+    color: #333;
+    font-weight: 400;
+  }
+}
+@keyframes labelIn {
+  0% {
+    left: 1px;
+    opacity: 1;
+    top: 1.2em;
+    font-size: 1em;
+    font-weight: 300;
+  }
+  50% {
+    font-size: 1em;
+    left: 1em;
+    opacity: 0;
+    top: 1.2em;
+    font-weight: 300;
+  }
+  50.01% {
+    font-size: 0.65em;
+    left: 1em;
+    opacity: 0;
+    top: 0.2em;
+    color: #333;
+    font-weight: 400;
+  }
+  100% {
+    font-size: 0.65em;
+    opacity: 1;
+    left: 1px;
+    top: 0.2em;
+    color: #333;
+    font-weight: 400;
+  }
+}
+
+@-webkit-keyframes labelOut {
+  0% {
+    left: 1px;
+    opacity: 1;
+    top: 1.2em;
+    font-size: 1em;
+    font-weight: 300;
+  }
+  50% {
+    font-size: 1em;
+    left: 1em;
+    opacity: 0;
+    top: 1.2em;
+    font-weight: 300;
+  }
+  50.01% {
+    font-size: 0.65em;
+    left: 1em;
+    opacity: 0;
+    top: 0.2em;
+    color: #333;
+    font-weight: 400;
+  }
+  100% {
+    font-size: 0.65em;
+    opacity: 1;
+    left: 1px;
+    top: 0.2em;
+    color: #333;
+    font-weight: 400;
+  }
+}
+@keyframes labelOut {
+  0% {
+    left: 1px;
+    opacity: 1;
+    top: 1.2em;
+    font-size: 1em;
+    font-weight: 300;
+  }
+  50% {
+    font-size: 1em;
+    left: 1em;
+    opacity: 0;
+    top: 1.2em;
+    font-weight: 300;
+  }
+  50.01% {
+    font-size: 0.65em;
+    left: 1em;
+    opacity: 0;
+    top: 0.2em;
+    color: #333;
+    font-weight: 400;
+  }
+  100% {
+    font-size: 0.65em;
+    opacity: 1;
+    left: 1px;
+    top: 0.2em;
+    color: #333;
+    font-weight: 400;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+input[type=submit] {
+
+  position: relative;
+  background: #333;
+  color: #fff;
+  height: 20px;
+  text-align: center;
+  text-transform: uppercase;
+  height: 40px;
+  margin-bottom: 10px;
+  letter-spacing: 0.157em;
+  cursor: pointer;
+
+  -webkit-transition:all cubic-bezier(0.450, 1.260, 0.450, 1.240) 0.6s;
+  transition:all cubic-bezier(0.450, 1.260, 0.450, 1.240) 0.6s;
+}
+
+input[type=submit]:hover,
+input[type=submit]:focus,
+input[type=submit]:active {
+
+  letter-spacing: 1.2em;
+  background: #6CBDB5;
+  color: #353432;
+}
+
+h1 img {
+
+  height: 1.2em;
+  vertical-align: middle;
+}
+
+.form-additional {
+
+  height: auto;
+}
+
+.form-additional-line {
+
+  display: block;
+  width: 100%;
+  line-height: 1em;
+  line-height: 1.1em;
+  font-width: 300;
+  padding-bottom: 10px;
+  word-break: break-all;
+  color: #acacac;
+}
+
+.form-additional-line span {
+
+  color: #333;
+}
+
+fieldset.description {
+
+  height: 100px;
+}
+
+textarea {
+
+  resize: none;
+}
+
+select:disabled + label {
+
+  color: #aaa;
+  text-decoration: line-through;
+}
