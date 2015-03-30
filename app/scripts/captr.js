@@ -585,12 +585,12 @@ app.factory('Redmine', ['$http','Config', function($http, Config) {
           "assigned_to_id": uid,
           "category_id": cid,
           "custom_fields":[
-            {"value": issue.status,"id":6},
-            {"value": issue.url,"id":7},
-            {"value": issue.width,"id":4},
-            {"value": issue.height,"id":5},
-            {"value": issue.useragent,"id":8},
-            {"value": issue.os,"id":9}
+            {"value": issue.status,"id":4},
+            {"value": issue.url,"id":5},
+            {"value": issue.width,"id":2},
+            {"value": issue.height,"id":3},
+            {"value": issue.useragent,"id":6},
+            {"value": issue.os,"id":7}
           ],
           "uploads": [
             {"token": issue.screenshot, "filename": "screenshot.png", "content_type": "image/png"}
