@@ -14,20 +14,13 @@
         "persistent": false
     },
     "options_page": "options.html",
-    "default_locale": "en",
+    "default_locale": "de",
     "content_scripts": [
         {
-            "matches": [
-                "http://*/*",
-                "https://*/*"
-            ],
-            "js": [
-                "bower_components/angular/angular.min.js",
-                "scripts/captr.js"
-            ],
-            "css": [
-                "styles/main.css"
-            ]
+          "matches": [
+              "http://*/*",
+              "https://*/*"
+          ]
         }
     ],
     "browser_action": {
@@ -40,9 +33,7 @@
     },
     "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
     "web_accessible_resources": [
-        "bower_components/angular/*",
-        "scripts/captr.js",
-        "styles/main.css"
+      
     ],
     "permissions": [
         "tabs",
