@@ -4,7 +4,7 @@
     "description": "The name of the application"
   },
   "appDescription": {
-    "message": "send screenshots to redmine",
+    "message": "send screenshots or tickets to redmine",
     "description": "The description of the application"
   }
 }
